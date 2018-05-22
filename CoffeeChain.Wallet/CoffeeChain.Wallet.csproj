@@ -17,4 +17,10 @@
     <PackageReference Include="Xunit" Version="2.3.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="abi.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
