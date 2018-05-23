@@ -72,6 +72,7 @@ namespace CoffeeChain.Wallet
                     break;
 
                 case "13": // CALL Get Programm Details
+                    await CallGetProgramDetails();
                     break;
 
                 default:
@@ -87,7 +88,7 @@ namespace CoffeeChain.Wallet
             var target = AskForTargetWallet();
 
             var tokens = await _coffeeEconomyService.GetTokens(target);
-            Console.WriteLine($"Es befinden sich {tokens} Token in der Wallet.");
+            Console.WriteLine($"There are {tokens} tokens in the wallet.");
         }
 
         private async Task SendAddAuthorizedExchangeWallet()
@@ -108,6 +109,7 @@ namespace CoffeeChain.Wallet
             var result = await _coffeeEconomyService.AddCustomer(target, name, department, telephone, email);
             Console.WriteLine($"Customer successfully created with transactionId {result}.");
         }
+
         private async Task SendAddCoffeeMaker()
         {
             var target = AskForTargetWallet();
@@ -116,18 +118,11 @@ namespace CoffeeChain.Wallet
             var locDepartment = AskFor("department");
             var locLatitude = AskFor("latitude");
             var locLongitude = AskFor("longitude");
-            
-            Console.Write(@"Which Machinetype do you have? Press a Number:
-    1    ---     Capsules
-    2    ---     Pads
-    3    ---     Filter
-    4    ---     Pulver
-    5    ---     FullyAutomatic
-    6    ---     VendingMachine 
-    ");
+
+            PrintMachineTypeOptions();
             int infoMachineType = Convert.ToInt32(Console.ReadLine());
             var infoDescription = AskFor("description");
-            
+
             var result = await _coffeeEconomyService.AddCoffeemaker(target, name, locDescriptive, locDepartment, locLatitude, locLongitude, infoMachineType, infoDescription);
             Console.WriteLine($"Coffeemaker successfully created with transactionId {result}.");
         }
@@ -135,13 +130,11 @@ namespace CoffeeChain.Wallet
         private async Task AddCoffeeMakerProgram()
         {
             var target = AskForTargetWallet();
-            var name = AskFor("Coffeename");
-            Console.Write(@"How much Tokens should this Coffee cost (100 Token = 1 €) ?
-            ");
-            int cost = Convert.ToInt32(Console.ReadLine());
-            var result = await _coffeeEconomyService.AddCoffeemakerPogram(target, name, cost );
-            Console.WriteLine($"Coffeemaker Program successfully created with transactionId {result}.");
+            var name = AskFor("coffee name");
+            var cost = AskForCoffeePrice();
 
+            var result = await _coffeeEconomyService.AddCoffeemakerPogram(target, name, cost);
+            Console.WriteLine($"Coffeemaker program successfully created with transactionId {result}.");
         }
 
         private async Task SendBuyTokensTransaction()
@@ -159,36 +152,27 @@ namespace CoffeeChain.Wallet
 
         private async Task SendSellTokens()
         {
-            var seller = AskFor("Seller Wallet");
-            Console.WriteLine(@"Enter Amount of Tokens to sell:
-            ");
-            int amount = Convert.ToInt32(Console.ReadLine());
+            var seller = AskFor("seller wallet");
+            var amount = AskForAmountOfTokensToSell();
+
             var result = await _coffeeEconomyService.SellTokens(seller, amount);
             Console.WriteLine($"Tokens successfully sold with transactionId {result}.");
-
         }
 
         private async Task SendTransferTokens()
         {
-            var receiver = AskFor("Receiver Wallet");
-            Console.WriteLine(@"Enter Amount of Tokens to transfare:
-            ");
-            int amount = Convert.ToInt32(Console.ReadLine());
-            
-            var result = await _coffeeEconomyService.TransfareTokens(receiver, amount);
-            Console.WriteLine($"Tokens successfully transfared with transactionId {result}.");
+            var receiver = AskFor("receiver wallet");
+            var amount = AskForAmountOfTokensToTransfer();
 
+            var result = await _coffeeEconomyService.TransfareTokens(receiver, amount);
+            Console.WriteLine($"Tokens successfully transfered with transactionId {result}.");
         }
 
         private async Task SendBuyCoffee()
         {
             var coffeeMaker = AskForTargetWallet();
-            Console.WriteLine(@"Enter Program ID (0, 1, 2):
-            ");
-            int program =  Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine(@"Enter amount of coffees:
-            ");
-            int amount =Convert.ToInt32(Console.ReadLine());
+            var program = AskForCoffeeProgram();
+            var amount = AskForAmountOfCoffees();
 
             var result = await _coffeeEconomyService.BuyCoffee(coffeeMaker, program, amount);
             Console.WriteLine($"Coffee successfully bought with transactionId {result}.");
@@ -196,43 +180,51 @@ namespace CoffeeChain.Wallet
 
         private async Task CallDisplayCustomerData()
         {
-            
             var target = AskForTargetWallet();
 
-            var data = await _coffeeEconomyService.DisplayCustomerData(target);
-            Console.WriteLine($"Name: {data.Name} ");
-            Console.WriteLine($"Email: {data.Email} ");
-            Console.WriteLine($"Telephone: {data.Telephone} ");
-            Console.WriteLine($"Department: {data.Department} ");
+            var data = await _coffeeEconomyService.GetCustomerData(target);
+            Console.WriteLine($"Name: {data.Name}");
+            Console.WriteLine($"Email: {data.Email}");
+            Console.WriteLine($"Telephone: {data.Telephone}");
+            Console.WriteLine($"Department: {data.Department}");
         }
 
-         private async Task CallDisplayCoffeeMakerData()
+        private async Task CallDisplayCoffeeMakerData()
         {
             var target = AskForTargetWallet();
-            var data = await _coffeeEconomyService.DisplayCoffeeMakerData(target);
-            Console.WriteLine($"Name: {data.Name} ");
-            Console.WriteLine($"Owner Address: {data.OwenerAddress} ");
-            Console.WriteLine($"DescriptiveLocation: {data.DescriptiveLocation} ");
-            Console.WriteLine($"Department: {data.Department} ");
-            Console.WriteLine($"Latitude: {data.Latitude} ");
-            Console.WriteLine($"Longitude: {data.Longitude} ");
-            Console.WriteLine($"MachineType: {data.MachineType} ");
-            Console.WriteLine($"MachineInfo: {data.MachineInfo} ");
+
+            var data = await _coffeeEconomyService.GetCoffeeMakerData(target);
+            Console.WriteLine($"Name: {data.Name}");
+            Console.WriteLine($"Owner Address: {data.OwenerAddress}");
+            Console.WriteLine($"Location Description: {data.DescriptiveLocation}");
+            Console.WriteLine($"Department: {data.Department}");
+            Console.WriteLine($"Latitude: {data.Latitude}");
+            Console.WriteLine($"Longitude: {data.Longitude}");
+            Console.WriteLine($"Machine Type: {data.MachineType}");
+            Console.WriteLine($"Machine Info: {data.MachineInfo}");
         }
 
-        
+        private async Task CallGetProgramDetails()
+        {
+            var target = AskForTargetWallet();
+            var program = AskForCoffeeProgram();
+
+            var data = await _coffeeEconomyService.GetCoffeeMakerProgramDetails(target, program);
+            Console.WriteLine($"Name: {data.Name}");
+            Console.WriteLine($"Price: {data.Price}");
+        }
 
         private async Task CallCountPrograms()
         {
             var target = AskForTargetWallet();
-            int count = await _coffeeEconomyService.CountPrograms(target);
-            Console.Write("There are "+count+" Programs");
-        }
 
+            int count = await _coffeeEconomyService.GetCoffeeMakerProgramCount(target);
+            Console.WriteLine($"There are {count} programs available.");
+        }
 
         private void PrintMenu()
         {
-            Console.WriteLine(@"What would you like to do? Press a Number:
+            Console.WriteLine(@"What would you like to do? Please enter one of the following numbers:
     1    ---     Get Tokens from an Address
     2    ---     Add  Authorized Exchange Wallet 
     3    ---     Add Customer
@@ -246,7 +238,18 @@ namespace CoffeeChain.Wallet
     11   ---     Display Coffeemaker Data
     12   ---     Count Coffeemaker Programs
     13   ---     Get Program Details
-    0    ---     Close ");
+    0    ---     Close");
+        }
+
+        private void PrintMachineTypeOptions()
+        {
+            Console.WriteLine(@"Which machine type do you have? Please enter one of the following numbers:
+    0    ---     Capsule Machine
+    1    ---     Pad Machine (e.g. Nespresso)
+    2    ---     Filter Machine
+    3    ---     Pulver Machine
+    4    ---     Fully Automatic Machine
+    5    ---     Vending Machine");
         }
 
         private void PrintAuthorizedWalletsOnlyWarning()
@@ -267,7 +270,37 @@ namespace CoffeeChain.Wallet
 
         private int AskForEthereum()
         {
-            Console.WriteLine("Enter Amount in ETH (1 ETH = 100 Token)");
+            Console.WriteLine("Enter amount in ETH (1 ETH = 100 tokens):");
+            return Convert.ToInt32(Console.ReadLine());
+        }
+
+        private int AskForCoffeeProgram()
+        {
+            Console.WriteLine("Enter program number:");
+            return Convert.ToInt32(Console.ReadLine());
+        }
+
+        private int AskForAmountOfCoffees()
+        {
+            Console.WriteLine("Enter amount of coffees:");
+            return Convert.ToInt32(Console.ReadLine());
+        }
+
+        private int AskForAmountOfTokensToTransfer()
+        {
+            Console.WriteLine("Enter amount of tokens to transfer:");
+            return Convert.ToInt32(Console.ReadLine());
+        }
+
+        private int AskForAmountOfTokensToSell()
+        {
+            Console.WriteLine("Enter amount of tokens to sell:");
+            return Convert.ToInt32(Console.ReadLine());
+        }
+
+        private int AskForCoffeePrice()
+        {
+            Console.Write("How much tokens should this coffee cost (100 tokens = 1 €)?");
             return Convert.ToInt32(Console.ReadLine());
         }
     }

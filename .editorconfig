@@ -8,5 +8,5 @@ dotnet_naming_symbols.private_members.applicable_accessibilities = private
 
 dotnet_naming_style.underscore_prefix.capitalization = camel_case
 dotnet_naming_style.underscore_prefix.required_prefix = _
-dotnet_naming_style.underscore_prefix.required_suffix = ""
-dotnet_naming_style.underscore_prefix.word_separator = ""
+dotnet_naming_style.underscore_prefix.required_suffix =
+dotnet_naming_style.underscore_prefix.word_separator =
