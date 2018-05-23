@@ -22,7 +22,7 @@ namespace CoffeeChain.Wallet
 
             var account = Account.LoadFromKeyStore(KeyFile, password);
 
-            var web3 = new Nethereum.Web3.Web3(account, "http://192.168.1.166:30304");
+            var web3 = new Nethereum.Web3.Web3(account, "http://192.168.1.166:30304"); //http://80.120.111.94:30304
             var coffeeEconomyService = new CoffeeEconomyService(account, web3, ContractAddress);
             var console = new ConsoleService(web3, coffeeEconomyService);
 

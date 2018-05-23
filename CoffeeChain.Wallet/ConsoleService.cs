@@ -56,15 +56,19 @@ namespace CoffeeChain.Wallet
                     break;
 
                 case "9": // TRANS Buy Coffee
+                    await SendBuyCoffee();
                     break;
 
                 case "10": // CALL Display Customer Data
+                    await CallDisplayCustomerData();
                     break;
 
                 case "11": // CALL Display Coffeemaker Data
+                    await CallDisplayCoffeeMakerData();
                     break;
 
                 case "12": // CALL Count Coffeemaker Programs
+                    await CallCountPrograms();
                     break;
 
                 case "13": // CALL Get Programm Details
@@ -174,6 +178,55 @@ namespace CoffeeChain.Wallet
             var result = await _coffeeEconomyService.TransfareTokens(receiver, amount);
             Console.WriteLine($"Tokens successfully transfared with transactionId {result}.");
 
+        }
+
+        private async Task SendBuyCoffee()
+        {
+            var coffeeMaker = AskForTargetWallet();
+            Console.WriteLine(@"Enter Program ID (0, 1, 2):
+            ");
+            int program =  Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine(@"Enter amount of coffees:
+            ");
+            int amount =Convert.ToInt32(Console.ReadLine());
+
+            var result = await _coffeeEconomyService.BuyCoffee(coffeeMaker, program, amount);
+            Console.WriteLine($"Coffee successfully bought with transactionId {result}.");
+        }
+
+        private async Task CallDisplayCustomerData()
+        {
+            
+            var target = AskForTargetWallet();
+
+            var data = await _coffeeEconomyService.DisplayCustomerData(target);
+            Console.WriteLine($"Name: {data.Name} ");
+            Console.WriteLine($"Email: {data.Email} ");
+            Console.WriteLine($"Telephone: {data.Telephone} ");
+            Console.WriteLine($"Department: {data.Department} ");
+        }
+
+         private async Task CallDisplayCoffeeMakerData()
+        {
+            var target = AskForTargetWallet();
+            var data = await _coffeeEconomyService.DisplayCoffeeMakerData(target);
+            Console.WriteLine($"Name: {data.Name} ");
+            Console.WriteLine($"Owner Address: {data.OwenerAddress} ");
+            Console.WriteLine($"DescriptiveLocation: {data.DescriptiveLocation} ");
+            Console.WriteLine($"Department: {data.Department} ");
+            Console.WriteLine($"Latitude: {data.Latitude} ");
+            Console.WriteLine($"Longitude: {data.Longitude} ");
+            Console.WriteLine($"MachineType: {data.MachineType} ");
+            Console.WriteLine($"MachineInfo: {data.MachineInfo} ");
+        }
+
+        
+
+        private async Task CallCountPrograms()
+        {
+            var target = AskForTargetWallet();
+            int count = await _coffeeEconomyService.CountPrograms(target);
+            Console.Write("There are "+count+" Programs");
         }
 
 
