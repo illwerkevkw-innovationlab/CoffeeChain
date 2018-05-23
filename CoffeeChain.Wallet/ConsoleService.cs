@@ -28,6 +28,7 @@ namespace CoffeeChain.Wallet
                     break;
 
                 case "2": // TRANS Add Authorized Exchange Wallet
+                    await SendAddAuthorizedExchangeWallet();
                     break;
 
                 case "3": // TRANS Add Customer
@@ -35,9 +36,11 @@ namespace CoffeeChain.Wallet
                     break;
 
                 case "4": // TRANS Add Coffeemaker
+                    await SendAddCoffeeMaker();
                     break;
 
                 case "5": // TRANS Add Coffeemaker Program
+                    await AddCoffeeMakerProgram();
                     break;
 
                 case "6": // TRANS Buy Tokens
@@ -45,9 +48,11 @@ namespace CoffeeChain.Wallet
                     break;
 
                 case "7": // TRANS Sell Tokens
+                    await SendSellTokens();
                     break;
 
                 case "8": // TRANS Transfer Tokens
+                    await SendTransferTokens();
                     break;
 
                 case "9": // TRANS Buy Coffee
@@ -81,6 +86,13 @@ namespace CoffeeChain.Wallet
             Console.WriteLine($"Es befinden sich {tokens} Token in der Wallet.");
         }
 
+        private async Task SendAddAuthorizedExchangeWallet()
+        {
+            var target = AskForTargetWallet();
+            var result = await _coffeeEconomyService.AddAuthorizedExchangeWallet(target);
+            Console.WriteLine($"Exchangewallet successfully created with transactionId {result}.");
+        }
+
         private async Task SendAddCustomerTransaction()
         {
             var target = AskForTargetWallet();
@@ -91,6 +103,41 @@ namespace CoffeeChain.Wallet
 
             var result = await _coffeeEconomyService.AddCustomer(target, name, department, telephone, email);
             Console.WriteLine($"Customer successfully created with transactionId {result}.");
+        }
+        private async Task SendAddCoffeeMaker()
+        {
+            var target = AskForTargetWallet();
+            var name = AskFor("name");
+            var locDescriptive = AskFor("locDescriptive");
+            var locDepartment = AskFor("department");
+            var locLatitude = AskFor("latitude");
+            var locLongitude = AskFor("longitude");
+            
+            Console.Write(@"Which Machinetype do you have? Press a Number:
+    1    ---     Capsules
+    2    ---     Pads
+    3    ---     Filter
+    4    ---     Pulver
+    5    ---     FullyAutomatic
+    6    ---     VendingMachine 
+    ");
+            int infoMachineType = Convert.ToInt32(Console.ReadLine());
+            var infoDescription = AskFor("description");
+            
+            var result = await _coffeeEconomyService.AddCoffeemaker(target, name, locDescriptive, locDepartment, locLatitude, locLongitude, infoMachineType, infoDescription);
+            Console.WriteLine($"Coffeemaker successfully created with transactionId {result}.");
+        }
+
+        private async Task AddCoffeeMakerProgram()
+        {
+            var target = AskForTargetWallet();
+            var name = AskFor("Coffeename");
+            Console.Write(@"How much Tokens should this Coffee cost (100 Token = 1 €) ?
+            ");
+            int cost = Convert.ToInt32(Console.ReadLine());
+            var result = await _coffeeEconomyService.AddCoffeemakerPogram(target, name, cost );
+            Console.WriteLine($"Coffeemaker Program successfully created with transactionId {result}.");
+
         }
 
         private async Task SendBuyTokensTransaction()
@@ -105,6 +152,30 @@ namespace CoffeeChain.Wallet
             var result = await _coffeeEconomyService.BuyTokens(target, amount);
             Console.WriteLine($"Tokens successfully bought with transactionId {result}.");
         }
+
+        private async Task SendSellTokens()
+        {
+            var seller = AskFor("Seller Wallet");
+            Console.WriteLine(@"Enter Amount of Tokens to sell:
+            ");
+            int amount = Convert.ToInt32(Console.ReadLine());
+            var result = await _coffeeEconomyService.SellTokens(seller, amount);
+            Console.WriteLine($"Tokens successfully sold with transactionId {result}.");
+
+        }
+
+        private async Task SendTransferTokens()
+        {
+            var receiver = AskFor("Receiver Wallet");
+            Console.WriteLine(@"Enter Amount of Tokens to transfare:
+            ");
+            int amount = Convert.ToInt32(Console.ReadLine());
+            
+            var result = await _coffeeEconomyService.TransfareTokens(receiver, amount);
+            Console.WriteLine($"Tokens successfully transfared with transactionId {result}.");
+
+        }
+
 
         private void PrintMenu()
         {
