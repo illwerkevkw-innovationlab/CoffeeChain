@@ -3,7 +3,7 @@
 ## Table of Contents
 
 - [Install](#install)
-  - [Ethereum Tools on Ubuntu 16.04 LTS](#ethereum-tools-on-ubuntu-16.04-lts)
+  - [Ethereum Tools on Ubuntu 16.04 LTS](#ethereum-tools-on-ubuntu-1604-lts)
   - [Geth on a RaspberryPi](#geth-on-a-raspberrypi)
 - [Create Genesis File](#create-genesis-file)
   - [Genesis for Proof of Work (PoW)](#genesis-for-proof-of-work-pow)
