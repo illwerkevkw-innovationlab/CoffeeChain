@@ -1,6 +1,23 @@
-# CoffeeChain
+# CoffeeChain - An Ethereum Smart Contract Example
 
-## 1. Install Ethereum Tool on Ubuntu 16.04 LTS
+## Table of Contents
+
+- [Install](#install)
+  - [Ethereum Tools on Ubuntu 16.04 LTS](#ethereum-tools-on-ubuntu-16.04-lts)
+  - [Geth on a RaspberryPi](#geth-on-a-raspberrypi)
+- [Create Genesis File](#create-genesis-file)
+  - [Genesis for Proof of Work (PoW)](#genesis-for-proof-of-work-pow)
+  - [Genesis for Proof of Authority (PoA)](#genesis-for-proof-of-authority-poa)
+- [Create the chain](#create-the-chain)
+  - [Initialize the chain for each validator](#initialize-the-chain-for-each-validator)
+  - [Start the first node](#start-the-first-node)
+  - [Start the second node](#start-the-second-node)
+- [Install mist wallet application](#install-mist-wallet-application)
+- [Deploy your first smart contract](#deploy-your-first-smart-contract)
+
+## Install
+
+### Ethereum Tools on Ubuntu 16.04 LTS
 ```
 sudo apt-get install software-properties-common
 sudo add-apt-repository -y ppa:ethereum/ethereum
@@ -8,25 +25,27 @@ sudo apt-get update
 sudo apt-get install ethereum
 ```
 
-Install Geth on Raspi
+### Geth on a RaspberryPi
+1) Download the binary :
+    ```
+    curl https://gethstore.blob.core.windows.net/builds/geth-linux-arm7-1.8.6-12683fec.tar.gz --output geth-linux-arm7-1.8.6-12683fec.tar.gz
+    ```
 
-Download Binary :
-```
-curl --header 'Host: gethstore.blob.core.windows.net' --user-agent 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0' --header 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' --header 'Accept-Language: en-US,en;q=0.5' --referer 'https://geth.ethereum.org/downloads/' --header 'Upgrade-Insecure-Requests: 1' 'https://gethstore.blob.core.windows.net/builds/geth-linux-arm7-1.8.6-12683fec.tar.gz' --output 'geth-linux-arm7-1.8.6-12683fec.tar.gz'
-```
+2) Unpack the archive:
+    ```
+    tar -xvzf geth-linux-arm7-1.8.6-12683fec.tar.gz
+    ```
 
-Unpack:
-```
-tar -xvzf geth-linux-arm7-1.8.6-12683fec.tar.gz
-```
+3) Move into the new directory and move the `geth` binary to `/usr/local/bin/`:
+    ```
+    cd geth-linux-arm7-1.8.6-12683fec/
+    sudo mv geth /usr/local/bin/
+    ```
 
-Move to the new directory and move the geth binary to `/usr/local/bin/`:
-```
-cd geth-linux-arm7-1.8.6-12683fec/
-sudo mv geth /usr/local/bin/
-```
+## Create genesis file
 
-## 2.1 Create Genesis File for POW or
+### Genesis for Proof of Work (PoW)
+Create a new file named `genesis.json` with the following contents:
 ```
 {
     "config": {  
@@ -36,35 +55,38 @@ sudo mv geth /usr/local/bin/
         "eip158Block": 0
     },
     "difficulty": "0x400",
-    "gasLimit": "0x8000000",  //set this really high for testing
+    "gasLimit": "0x8000000",
     "alloc": {}
 }
 ```
+The `chainId` may be any integer except one from the range `0-10` because these are the official network identifiers.
 
-## 2.2 Create Genesis File for POA
+### Genesis for Proof of Authority (PoA)
 
-### First Create on each Validation Node an Account:
+#### First: create an account on each initial validation node (at least 2)
 ```
-devsrv1$ geth --datadir node1/ account new
+devsrv$ geth --datadir node1/ account new
 Your new account is locked with a password. Please give a password. Do not forget this password.
-Passphrase: pwdnode1 (for example)
+Passphrase: pwdnode1
 Repeat passphrase: pwdnode1
 Address: {0x87366ef81db496edd0ea2055ca605e8686eec1e6}
 
-devsrv2$ geth --datadir node2/ account new
+devsrv$ geth --datadir node2/ account new
 Your new account is locked with a password. Please give a password. Do not forget this password.
-Passphrase: pwdnode2 (for example)
+Passphrase: pwdnode2
 Repeat passphrase: pwdnode2
 Address: {08a58f09194e403d02a1928a7bf78646cfc260b0}
-
-Store Password in File to Unlock Account:
-devsrv1$ echo 'pwdnode1' > node1/password.txt
-devsrv2$ echo 'pwdnode2' > node2/password.txt
 ```
 
-### And than Create Genesis:
+#### Second: store passwords in files to easily unlock the accounts later on
 ```
-devnet$ puppeth 
+devsrv$ echo 'pwdnode1' > node1/password.txt
+devsrv$ echo 'pwdnode2' > node2/password.txt
+```
+
+#### Third: create the genesis block
+```
+devsrv$ puppeth 
 Please specify a network name to administer (no spaces, please)
 > devnet
 What would you like to do? (default = stats)
@@ -83,15 +105,15 @@ How many seconds should blocks take? (default = 15)
 > 5 // for example
 
 Which accounts are allowed to seal? (mandatory at least one)
-> 0x87366ef81db496edd0ea2055ca605e8686eec1e6 //copy paste from account.txt :)
+> 0x87366ef81db496edd0ea2055ca605e8686eec1e6 //copy paste from above
 > 0x08a58f09194e403d02a1928a7bf78646cfc260b0
 
 Which accounts should be pre-funded? (advisable at least one)
-> 0x87366ef81db496edd0ea2055ca605e8686eec1e6 // free ethers !
+> 0x87366ef81db496edd0ea2055ca605e8686eec1e6 // free ethers :)
 > 0x08a58f09194e403d02a1928a7bf78646cfc260b0
 
 Specify your chain/network ID if you want an explicit one (default = random)
-> 242 // for example. Do not use anything from 1 to 10
+> 242 // for example; do not use anything from 1 to 10
 
 Anything fun to embed into the genesis block? (max 32 bytes)
 >
@@ -119,43 +141,53 @@ What would you like to do? (default = stats)
 > ^C // ctrl+C to quit puppeth
 ```
 
-## 3 Create Chain
+## Create the chain
 
-Copy genesis File on each Server you would like to create a Ethereum Node
+Copy the created `genesis.json` on each server you would like to create a validator node on. In this example we run both nodes on the same server, so this step is not necessary.
 
-### Initialise the Chain
+### Initialize the chain for each validator
 ```
-devsrv1$  geth --datadir node1/ init genesis.json
-devsrv2$  geth --datadir node2/ init genesis.json
+devsrv$  geth --datadir node1/ init genesis.json
+devsrv$  geth --datadir node2/ init genesis.json
 ```
 
-### Start the First Node:
+### Start the first node
 ```
-geth   --identity "coffee_node1"  --networkid 242 --datadir /home/pi/node1 --unlock 0 --password "/home/pi/node1/password.txt" --mine console
+geth --identity "node1" --networkid 242 --datadir node1/ --unlock 0 --password "node1/password.txt" --mine console
 ```
-Congratulations, you just started your own Ethereum node. :)
-Now lets get the enode address to connect both nodes together:
+Congratulations, you just started your first own Ethereum node. 👍
+
+For reference, the parameter `--identity` gives a name to the node, the parameter `--unlock` selects the given account from the local account list (we only have one account per node, so the zero-based selection `0` is correct) and `--password` unlocks the selected account with the password from the given file. With `--mine` we also start mining immediately. The last parameter, `console`, gives us an administrative console for the node.
+
+### Start the second node
+Before we can start the second node, we need to get the enode address from the first node to be able to connect both nodes together. We can achieve this with `admin.nodeInfo.enode` or with `admin` to get some more details besides the `enode` address:
 ```
 > admin.nodeInfo.enode
 "enode://5e78262b450207237db480afa44616fcd00c1e84fdb25c22847a8f22e83fae702f5281af80fc8bd8447d26689e2bd88d53d6a50ca0ac10433ce482765fed80c5@[::]:30303"
 ```
 
-Change the IP to your nodes local IP:
+In this string we still have to change the IP to the nodes actual IP, e.g. the local one in our case:
 ```
 "enode://5e78262b450207237db480afa44616fcd00c1e84fdb25c22847a8f22e83fae702f5281af80fc8bd8447d26689e2bd88d53d6a50ca0ac10433ce482765fed80c5@192.168.1.10:30303"
 ```
-and save it in a file named `static-nodes.json` on `node2` in the folder `node2`
 
-Now you can start the second node with:
+We then save the data wrapped in a json array in a file named `static-nodes.json` in the folder `node2` (or on our second node server):
 ```
-geth   --identity "coffee_node2"  --networkid 242 --datadir /home/pi/node2 --unlock 0 --password "/home/pi/node2/password.txt" --mine console
+[
+  "enode://5e78262b450207237db480afa44616fcd00c1e84fdb25c22847a8f22e83fae702f5281af80fc8bd8447d26689e2bd88d53d6a50ca0ac10433ce482765fed80c5@192.168.1.10:30303"
+]
 ```
 
-Check if both connected:
+Now we can start the second node with:
+```
+geth --identity "node2" --networkid 242 --datadir node2/ --unlock 0 --password "node2/password.txt" --mine console
+```
+
+To check if both nodes are connected to each other, we can run:
 ```
 > admin.peers
 ```
-shoud look like this:
+which should output something like this:
 ```
 [{
     caps: ["eth/62", "eth/63"],
@@ -178,11 +210,12 @@ shoud look like this:
 }]
 ```
 
-## 4 Install Mist Wallet 
+## Install the `mist` wallet application
 
-https://github.com/ethereum/mist/releases
+The `mist` wallet application is available on github at https://github.com/ethereum/mist/releases.
 
-Add `static-nodes.json` in `.ethereum` directory and start `mist`. You should see `Privat-Net` on the start up screen.
+To make it connect to your private chain, add above created `static-nodes.json` in the `.ethereum` directory (which is created during the installation of `mist`) and then start `mist`. You should see `Privat-Net` on the start up screen if everything worked out properly.
 
-Now You can creat the contract `contract.sol`.
+## Deploy your first smart contract
 
+In your running `mist` instance, you can go to `Contracts` in the top menu and then click on `Create Contract`. Here you can copy the contents of `contracts/coffee_economy.sol`. After that you can deploy the contract on your blockchain. 👍
