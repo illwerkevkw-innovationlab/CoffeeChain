@@ -12,7 +12,7 @@
   - [Initialize the chain for each validator](#initialize-the-chain-for-each-validator)
   - [Start the first node](#start-the-first-node)
   - [Start the second node](#start-the-second-node)
-- [Install mist wallet application](#install-mist-wallet-application)
+- [Install mist wallet application](#install-the-mist-wallet-application)
 - [Deploy your first smart contract](#deploy-your-first-smart-contract)
 
 ## Install
