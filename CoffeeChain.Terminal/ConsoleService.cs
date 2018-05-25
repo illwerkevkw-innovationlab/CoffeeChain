@@ -92,14 +92,14 @@ namespace CoffeeChain.Terminal
         {
             var target = AskForTargetWallet();
 
-            var tokens = await _coffeeEconomyService.GetTokens(target);
+            var tokens = await _coffeeEconomyService.GetTokensAsync(target);
             Console.WriteLine($"There are {tokens} tokens in the wallet.");
         }
 
         private async Task SendAddAuthorizedExchangeWallet()
         {
             var target = AskForTargetWallet();
-            var result = await _coffeeEconomyService.AddAuthorizedExchangeWallet(target);
+            var result = await _coffeeEconomyService.AddAuthorizedExchangeWalletAsync(target);
             Console.WriteLine($"Exchangewallet successfully created with transactionId {result}.");
         }
 
@@ -111,7 +111,7 @@ namespace CoffeeChain.Terminal
             var telephone = AskFor("telephone");
             var email = AskFor("email");
 
-            var result = await _coffeeEconomyService.AddCustomer(target, name, department, telephone, email);
+            var result = await _coffeeEconomyService.AddCustomerAsync(target, name, department, telephone, email);
             Console.WriteLine($"Customer successfully created with transactionId {result}.");
         }
 
@@ -128,7 +128,7 @@ namespace CoffeeChain.Terminal
             int infoMachineType = Convert.ToInt32(Console.ReadLine());
             var infoDescription = AskFor("description");
 
-            var result = await _coffeeEconomyService.AddCoffeemaker(target, name, locDescriptive, locDepartment, locLatitude, locLongitude, infoMachineType, infoDescription);
+            var result = await _coffeeEconomyService.AddCoffeemakerAsync(target, name, locDescriptive, locDepartment, locLatitude, locLongitude, infoMachineType, infoDescription);
             Console.WriteLine($"Coffeemaker successfully created with transactionId {result}.");
         }
 
@@ -138,7 +138,7 @@ namespace CoffeeChain.Terminal
             var name = AskFor("coffee name");
             var cost = AskForCoffeePrice();
 
-            var result = await _coffeeEconomyService.AddCoffeemakerPogram(target, name, cost);
+            var result = await _coffeeEconomyService.AddCoffeemakerPogramAsync(target, name, cost);
             Console.WriteLine($"Coffeemaker program successfully created with transactionId {result}.");
         }
 
@@ -151,7 +151,7 @@ namespace CoffeeChain.Terminal
             var amount = UnitConversion.Convert.ToWei(AskForEthereum());
             Console.WriteLine($"Transfering wei: {amount}");
 
-            var result = await _coffeeEconomyService.BuyTokens(target, amount);
+            var result = await _coffeeEconomyService.BuyTokensAsync(target, amount);
             Console.WriteLine($"Tokens successfully bought with transactionId {result}.");
         }
 
@@ -160,7 +160,7 @@ namespace CoffeeChain.Terminal
             var seller = AskFor("seller wallet");
             var amount = AskForAmountOfTokensToSell();
 
-            var result = await _coffeeEconomyService.SellTokens(seller, amount);
+            var result = await _coffeeEconomyService.SellTokensAsync(seller, amount);
             Console.WriteLine($"Tokens successfully sold with transactionId {result}.");
         }
 
@@ -169,7 +169,7 @@ namespace CoffeeChain.Terminal
             var receiver = AskFor("receiver wallet");
             var amount = AskForAmountOfTokensToTransfer();
 
-            var result = await _coffeeEconomyService.TransfareTokens(receiver, amount);
+            var result = await _coffeeEconomyService.TransfareTokensAsync(receiver, amount);
             Console.WriteLine($"Tokens successfully transfered with transactionId {result}.");
         }
 
@@ -179,7 +179,7 @@ namespace CoffeeChain.Terminal
             var program = AskForCoffeeProgram();
             var amount = AskForAmountOfCoffees();
 
-            var result = await _coffeeEconomyService.BuyCoffee(coffeeMaker, program, amount);
+            var result = await _coffeeEconomyService.BuyCoffeeAsync(coffeeMaker, program, amount);
             Console.WriteLine($"Coffee successfully bought with transactionId {result}.");
         }
 
@@ -187,7 +187,7 @@ namespace CoffeeChain.Terminal
         {
             var target = AskForTargetWallet();
 
-            var data = await _coffeeEconomyService.GetCustomerData(target);
+            var data = await _coffeeEconomyService.GetCustomerDataAsync(target);
             Console.WriteLine($"Name: {data.Name}");
             Console.WriteLine($"Email: {data.Email}");
             Console.WriteLine($"Telephone: {data.Telephone}");
@@ -198,7 +198,7 @@ namespace CoffeeChain.Terminal
         {
             var target = AskForTargetWallet();
 
-            var data = await _coffeeEconomyService.GetCoffeeMakerData(target);
+            var data = await _coffeeEconomyService.GetCoffeeMakerDataAsync(target);
             Console.WriteLine($"Name: {data.Name}");
             Console.WriteLine($"Owner Address: {data.OwenerAddress}");
             Console.WriteLine($"Location Description: {data.DescriptiveLocation}");
@@ -214,7 +214,7 @@ namespace CoffeeChain.Terminal
             var target = AskForTargetWallet();
             var program = AskForCoffeeProgram();
 
-            var data = await _coffeeEconomyService.GetCoffeeMakerProgramDetails(target, program);
+            var data = await _coffeeEconomyService.GetCoffeeMakerProgramDetailsAsync(target, program);
             Console.WriteLine($"Name: {data.Name}");
             Console.WriteLine($"Price: {data.Price}");
         }
@@ -223,7 +223,7 @@ namespace CoffeeChain.Terminal
         {
             var target = AskForTargetWallet();
 
-            int count = await _coffeeEconomyService.GetCoffeeMakerProgramCount(target);
+            int count = await _coffeeEconomyService.GetCoffeeMakerProgramCountAsync(target);
             Console.WriteLine($"There are {count} programs available.");
         }
 
