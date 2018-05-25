@@ -2,13 +2,13 @@
 using System.IO;
 using System.Numerics;
 using System.Threading.Tasks;
-using CoffeeChain.Wallet.FunctionOutputs;
+using CoffeeChain.Connector.FunctionOutputs;
 using Nethereum.Contracts;
 using Nethereum.Hex.HexTypes;
 using Nethereum.Web3;
 using Nethereum.Web3.Accounts;
 
-namespace CoffeeChain.Wallet
+namespace CoffeeChain.Connector
 {
     public class CoffeeEconomyService
     {

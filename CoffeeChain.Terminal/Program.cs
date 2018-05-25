@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+using CoffeeChain.Connector;
 using Nethereum.Web3.Accounts;
 
-namespace CoffeeChain.Wallet
+namespace CoffeeChain.Terminal
 {
     public class Program
     {

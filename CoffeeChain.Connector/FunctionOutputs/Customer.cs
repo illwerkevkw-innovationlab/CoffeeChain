@@ -1,6 +1,6 @@
 ﻿using Nethereum.ABI.FunctionEncoding.Attributes;
 
-namespace CoffeeChain.Wallet.FunctionOutputs
+namespace CoffeeChain.Connector.FunctionOutputs
 {
     [FunctionOutput]
     public class Customer

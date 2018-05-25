@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
+using CoffeeChain.Connector;
 using Nethereum.Util;
 using Nethereum.Web3;
 
-namespace CoffeeChain.Wallet
+namespace CoffeeChain.Terminal
 {
     public class ConsoleService
     {

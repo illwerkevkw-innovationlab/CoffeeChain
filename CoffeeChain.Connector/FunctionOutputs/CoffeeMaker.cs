@@ -1,6 +1,6 @@
 ﻿using Nethereum.ABI.FunctionEncoding.Attributes;
 
-namespace CoffeeChain.Wallet.FunctionOutputs
+namespace CoffeeChain.Connector.FunctionOutputs
 {
     public enum MachineType
     {
@@ -37,7 +37,7 @@ namespace CoffeeChain.Wallet.FunctionOutputs
         public int MachineTypeInt { get; set; }
 
         [Parameter("string", "machineInfo", 8)]
-        public string MachineInfo { get; set; };
+        public string MachineInfo { get; set; }
 
 
         // special accessor for machineType to not interfere with ABI
