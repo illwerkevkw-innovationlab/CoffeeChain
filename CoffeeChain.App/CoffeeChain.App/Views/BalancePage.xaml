@@ -11,29 +11,10 @@
         </Grid.RowDefinitions>
         <ScrollView Grid.Row="1">
             <StackLayout Orientation="Vertical" Padding="16,40,16,40" Spacing="10">
-                <Label Text="{Binding Wallet}" FontSize="16" />
-                <Label Text="{Binding CoffeeTokens}" FontSize="14" />
-                <!--<Label FontSize="14">
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <FormattedString.Spans>
-                                <Span Text="Wallet" FontAttributes="Bold" />
-                                <Span Text=" " />
-                                <Span Text="{Binding Wallet}" ForegroundColor="{StaticResource LightTextColor}" />
-                            </FormattedString.Spans>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-                <Label FontSize="10">
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <FormattedString.Spans>
-                                <Span Text="Coffee Tokens: " />
-                                <Span Text="{Binding CoffeeTokens}" />
-                            </FormattedString.Spans>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>-->
+                <Label FontSize="14" FontAttributes="Bold" Text="Wallet" />
+                <Label FontSize="14" TextColor="{StaticResource LightTextColor}" Text="{Binding Wallet}" />
+                <Label FontSize="14" FontAttributes="Bold" Margin="0,10,0,0" Text="Coffee Tokens" />
+                <Label FontSize="14" TextColor="{StaticResource LightTextColor}" Text="{Binding CoffeeTokens}" />
             </StackLayout>
         </ScrollView>
     </Grid>
