@@ -5,9 +5,12 @@
         public string Wallet { get; set; }
         public long CoffeeTokens { get; set; }
 
-        public BalanceViewModel()
+        public BalanceViewModel(TestService testService)
         {
             Title = "Balance";
+
+            Wallet = testService.GetWallet();
+            CoffeeTokens = testService.GetTokens();
         }
     }
 }

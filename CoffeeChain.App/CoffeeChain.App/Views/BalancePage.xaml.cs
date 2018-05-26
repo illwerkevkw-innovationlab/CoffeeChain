@@ -1,4 +1,5 @@
 ﻿using CoffeeChain.App.ViewModels;
+using CommonServiceLocator;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -7,20 +8,15 @@ namespace CoffeeChain.App.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class BalancePage : ContentPage
     {
-        BalanceViewModel viewModel;
+        BalanceViewModel _viewModel;
 
-        public BalancePage(BalanceViewModel viewModel)
+        public BalancePage()
         {
             InitializeComponent();
 
-            BindingContext = this.viewModel = viewModel;
-        }
+            _viewModel = ServiceLocator.Current.GetInstance<BalanceViewModel>();
 
-        public BalancePage() : this(new BalanceViewModel
-        {
-            Wallet = "0x54585691af6387f8a23eae6f280d2b6a4c9dc586",
-            CoffeeTokens = 18000,
-        })
-        { }
+            BindingContext = _viewModel;
+        }
     }
 }
