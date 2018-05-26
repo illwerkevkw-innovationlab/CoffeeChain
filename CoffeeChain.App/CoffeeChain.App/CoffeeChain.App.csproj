@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="3.0.0.482510" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\CoffeeChain.Connector\CoffeeChain.Connector.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\BalancePage.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>BalancePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\CoffeeMakerDetailPage.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>CoffeeMakerDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\CoffeeMakersPage.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>CoffeeMakersPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\MainPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\NewItemPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+</Project>

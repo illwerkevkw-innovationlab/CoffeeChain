@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CoffeeChain.App.Views.BalancePage"
+             xmlns:vm="clr-namespace:CoffeeChain.App.ViewModels;"
+             Title="{Binding Title}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <ScrollView Grid.Row="1">
+            <StackLayout Orientation="Vertical" Padding="16,40,16,40" Spacing="10">
+                <Label Text="{Binding Wallet}" FontSize="16" />
+                <Label Text="{Binding CoffeeTokens}" FontSize="14" />
+                <!--<Label FontSize="14">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <FormattedString.Spans>
+                                <Span Text="Wallet" FontAttributes="Bold" />
+                                <Span Text=" " />
+                                <Span Text="{Binding Wallet}" ForegroundColor="{StaticResource LightTextColor}" />
+                            </FormattedString.Spans>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label FontSize="10">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <FormattedString.Spans>
+                                <Span Text="Coffee Tokens: " />
+                                <Span Text="{Binding CoffeeTokens}" />
+                            </FormattedString.Spans>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>-->
+            </StackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
