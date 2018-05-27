@@ -4,6 +4,6 @@ namespace CoffeeChain.App.ViewModels
 {
     public class ViewModelLocator
     {
-        public BalanceViewModel BalanceViewModel => ServiceLocator.Current.GetInstance<BalanceViewModel>();
+        public AccountViewModel BalanceViewModel => ServiceLocator.Current.GetInstance<AccountViewModel>();
     }
 }

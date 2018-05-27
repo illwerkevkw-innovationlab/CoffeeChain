@@ -14,13 +14,31 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\BalancePage.xaml.cs">
+    <Compile Update="Views\AccountPage.xaml.cs">
       <SubType>Code</SubType>
-      <DependentUpon>BalancePage.xaml</DependentUpon>
+      <DependentUpon>AccountPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\MainPage.xaml.cs">
+    <Compile Update="Models\MainPageMenuItem.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\DefaultPage.xaml.cs">
+      <DependentUpon>DefaultPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Views\DashboardPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\MainPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\DefaultPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\MainPageMaster.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

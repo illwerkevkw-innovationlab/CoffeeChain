@@ -6,15 +6,15 @@ using Xamarin.Forms.Xaml;
 namespace CoffeeChain.App.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class BalancePage : ContentPage
+    public partial class AccountPage : ContentPage
     {
-        BalanceViewModel _viewModel;
+        AccountViewModel _viewModel;
 
-        public BalancePage()
+        public AccountPage()
         {
             InitializeComponent();
 
-            _viewModel = ServiceLocator.Current.GetInstance<BalanceViewModel>();
+            _viewModel = ServiceLocator.Current.GetInstance<AccountViewModel>();
 
             BindingContext = _viewModel;
         }

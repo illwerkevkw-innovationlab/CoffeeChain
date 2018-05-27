@@ -5,7 +5,7 @@ using Nethereum.Web3;
 
 namespace CoffeeChain.App.ViewModels
 {
-    public class BalanceViewModel : BaseViewModel
+    public class AccountViewModel : BaseViewModel
     {
         private readonly Web3 _web3;
         private readonly ICoffeeEconomyService _coffeeEconomyService;
@@ -24,7 +24,7 @@ namespace CoffeeChain.App.ViewModels
             set { SetProperty(ref _coffeeTokens, value); }
         }
 
-        public BalanceViewModel(Web3 web3, ICoffeeEconomyService coffeeEconomyService)
+        public AccountViewModel(Web3 web3, ICoffeeEconomyService coffeeEconomyService)
         {
             _web3 = web3;
             _coffeeEconomyService = coffeeEconomyService;

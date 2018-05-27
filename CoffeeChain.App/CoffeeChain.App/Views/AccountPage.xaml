@@ -1,15 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CoffeeChain.App.Views.BalancePage"
+             x:Class="CoffeeChain.App.Views.AccountPage"
              Title="{Binding Title}">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <ScrollView Grid.Row="1">
-            <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" />
+    <ContentPage.Content>
+        <ScrollView>
+            <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" HorizontalOptions="Center" VerticalOptions="Center" />
             <StackLayout Orientation="Vertical" Padding="16,40,16,40" Spacing="10" IsVisible="{Binding IsLoaded}">
                 <Label FontSize="14" FontAttributes="Bold" Text="Wallet" />
                 <Label FontSize="14" TextColor="{StaticResource LightTextColor}" Text="{Binding Wallet}" />
@@ -17,5 +13,5 @@
                 <Label FontSize="14" TextColor="{StaticResource LightTextColor}" Text="{Binding CoffeeTokens}" />
             </StackLayout>
         </ScrollView>
-    </Grid>
+    </ContentPage.Content>
 </ContentPage>
