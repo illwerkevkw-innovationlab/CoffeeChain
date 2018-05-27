@@ -18,14 +18,14 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="10"/>
                         </Grid.RowDefinitions>
-                        <Label Grid.Column="1" Grid.Row="1" Text="CoffeeChain" FontSize="16" FontAttributes="Bold" TextColor="White" />
+                        <Label Grid.Column="1" Grid.Row="1" Text="CoffeeChain" FontSize="Medium" FontAttributes="Bold" TextColor="White" />
                     </Grid>
                 </ListView.Header>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Padding="15,10" HorizontalOptions="FillAndExpand">
-                                <Label VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" Text="{Binding Title}" FontSize="16"/>
+                                <Label VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" Text="{Binding Title}" FontSize="Small"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
@@ -34,4 +34,3 @@
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
-    
