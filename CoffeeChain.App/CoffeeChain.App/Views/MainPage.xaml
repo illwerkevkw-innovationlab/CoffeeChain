@@ -7,7 +7,7 @@
         <pages:MainPageMaster x:Name="MasterPage" />
     </MasterDetailPage.Master>
     <MasterDetailPage.Detail>
-        <NavigationPage>
+        <NavigationPage IsEnabled="{Binding Source={Static Application.Current}, Path=IsLoaded}">
             <x:Arguments>
                 <pages:DashboardPage Title="Dashboard" />
             </x:Arguments>
