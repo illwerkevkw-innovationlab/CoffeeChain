@@ -16,8 +16,8 @@ namespace CoffeeChain.App
         private static string ContractAddress = @"0x3F45D4615A21cB534E1b0173EDBCb0305E41da96";
 
         public App ()
-		{
-			InitializeComponent();
+        {
+            InitializeComponent();
 
             var unityContainer = new UnityContainer();
 
@@ -46,8 +46,8 @@ namespace CoffeeChain.App
 
         private void RegisterCoffeeEconomyService(IUnityContainer container)
         {
-            var account = Account.LoadFromKeyStore(KeyFile, PassPhrase);
             var web3 = new Nethereum.Web3.Web3(account, "http://192.168.1.166:30304");
+            var account = Account.LoadFromKeyStore(KeyFile, PassPhrase);
             var service = new CoffeeEconomyService(account, web3, ContractAddress);
 
             container.RegisterInstance(web3);
