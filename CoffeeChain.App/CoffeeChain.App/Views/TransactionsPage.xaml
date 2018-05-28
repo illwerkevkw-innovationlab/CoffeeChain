@@ -1,11 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="CoffeeChain.App.Views.DefaultPage"
-             Title="404 - Default Page">
+             x:Class="CoffeeChain.App.Views.TransactionsPage">
     <ContentPage.Content>
         <StackLayout Padding="10">
-            <Label Text="This is a default page. If you see this, it means you forgot to swap it by an actual implementation." />
+            <Label Text="This page will display a list of performed transactions." />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
