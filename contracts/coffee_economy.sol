@@ -14,9 +14,10 @@ contract Mortal {
     }
     
 	/// @notice Can be used to destroy the contract.
-	/// @dev Can only be executed by the owner of the contract. Will refund the contract balance to the owner.
+	/// @dev Can only be executed by the owner of the contract. The contract may not hold any Ether.
     function kill() public {
         require(msg.sender == owner);
+        require(address(this).balance === 0);
         selfdestruct(owner);
     }
 }
