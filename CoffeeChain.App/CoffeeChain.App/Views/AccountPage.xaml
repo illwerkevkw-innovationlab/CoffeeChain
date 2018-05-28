@@ -19,48 +19,59 @@
                     <ActivityIndicator Grid.Row="1" HorizontalOptions="Center" IsRunning="True" Color="{StaticResource AccountSectionColor}" />
                     <Label Grid.Row="2" HorizontalOptions="Center" Text="Lade Account Daten ..." TextColor="{StaticResource MediumGrayTextColor}" />
                 </Grid>
-                <TableView Intent="Data" IsVisible="{Binding IsLoaded}">
-                    <TableRoot>
-                        <TableSection>
-                            <ViewCell>
-                                <StackLayout Orientation="Vertical" Margin="20,5,20,5">
-                                    <Label FontSize="Small" FontAttributes="Bold" Text="Wallet" />
-                                    <Label FontSize="Micro" TextColor="{StaticResource LightTextColor}" Text="{Binding Customer.Wallet}" />
-                                </StackLayout>
-                            </ViewCell>
-                            <ViewCell>
-                                <StackLayout Orientation="Vertical" Margin="20,5,20,5">
-                                    <Label FontSize="Small" FontAttributes="Bold" Text="Coffee Tokens" />
-                                    <Label FontSize="Micro" TextColor="{StaticResource LightTextColor}" Text="{Binding Customer.CoffeeTokens}" />
-                                </StackLayout>
-                            </ViewCell>
-                            <ViewCell>
-                                <StackLayout Orientation="Vertical" Margin="20,5,20,5">
-                                    <Label FontSize="Small" FontAttributes="Bold" Text="Name" />
-                                    <Label FontSize="Micro" TextColor="{StaticResource LightTextColor}" Text="{Binding Customer.Name}" />
-                                </StackLayout>
-                            </ViewCell>
-                            <ViewCell>
-                                <StackLayout Orientation="Vertical" Margin="20,5,20,5">
-                                    <Label FontSize="Small" FontAttributes="Bold" Text="Abteilung" />
-                                    <Label FontSize="Micro" TextColor="{StaticResource LightTextColor}" Text="{Binding Customer.Department}" />
-                                </StackLayout>
-                            </ViewCell>
-                            <ViewCell>
-                                <StackLayout Orientation="Vertical" Margin="20,5,20,5">
-                                    <Label FontSize="Small" FontAttributes="Bold" Text="Email" />
-                                    <Label FontSize="Micro" TextColor="{StaticResource LightTextColor}" Text="{Binding Customer.Email}" />
-                                </StackLayout>
-                            </ViewCell>
-                            <ViewCell>
-                                <StackLayout Orientation="Vertical" Margin="20,5,20,5">
-                                    <Label FontSize="Small" FontAttributes="Bold" Text="Telefon" />
-                                    <Label FontSize="Micro" TextColor="{StaticResource LightTextColor}" Text="{Binding Customer.Telephone}" />
-                                </StackLayout>
-                            </ViewCell>
-                        </TableSection>
-                    </TableRoot>
-                </TableView>
+                <Grid IsVisible="{Binding IsLoaded}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.Resources>
+                        <ResourceDictionary>
+                            <Style TargetType="StackLayout">
+                                <Setter Property="Orientation" Value="Vertical" />
+                                <Setter Property="Margin" Value="20,10,20,10" />
+                            </Style>
+                            <Style TargetType="Label" x:Key="CellHeader">
+                                <Setter Property="FontSize" Value="Small" />
+                                <Setter Property="FontAttributes" Value="Bold" />
+                            </Style>
+                            <Style TargetType="Label" x:Key="CellBody">
+                                <Setter Property="FontSize" Value="Small" />
+                                <Setter Property="TextColor" Value="{StaticResource LightTextColor}" />
+                            </Style>
+                        </ResourceDictionary>
+                    </Grid.Resources>
+                    <StackLayout Grid.Row="0">
+                        <Label Style="{StaticResource CellHeader}" Text="Wallet" />
+                        <Label Style="{StaticResource CellBody}" Text="{Binding Customer.Wallet}" />
+                    </StackLayout>
+                    <StackLayout Grid.Row="1">
+                        <Label Style="{StaticResource CellHeader}" Text="Coffee Tokens" />
+                        <Label Style="{StaticResource CellBody}" Text="{Binding Customer.CoffeeTokens}" />
+                    </StackLayout>
+                    <StackLayout Grid.Row="2">
+                        <Label Style="{StaticResource CellHeader}" Text="Name" />
+                        <Label Style="{StaticResource CellBody}" Text="{Binding Customer.Name}" />
+                    </StackLayout>
+                    <StackLayout Grid.Row="3">
+                        <Label Style="{StaticResource CellHeader}" Text="Abteilung" />
+                        <Label Style="{StaticResource CellBody}" Text="{Binding Customer.Department}" />
+                    </StackLayout>
+                    <StackLayout Grid.Row="4">
+                        <Label Style="{StaticResource CellHeader}" Text="Email" />
+                        <Label Style="{StaticResource CellBody}" Text="{Binding Customer.Email}" />
+                    </StackLayout>
+                    <StackLayout Grid.Row="5">
+                        <Label Style="{StaticResource CellHeader}" Text="Telefon" />
+                        <Label Style="{StaticResource CellBody}" Text="{Binding Customer.Telephone}" />
+                    </StackLayout>
+                </Grid>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
