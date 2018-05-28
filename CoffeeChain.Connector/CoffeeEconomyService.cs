@@ -1,12 +1,10 @@
-﻿using System;
-using System.IO;
-using System.Numerics;
+﻿using System.Numerics;
 using System.Threading.Tasks;
 using CoffeeChain.Connector.FunctionOutputs;
 using Nethereum.Contracts;
 using Nethereum.Hex.HexTypes;
+using Nethereum.RPC.Accounts;
 using Nethereum.Web3;
-using Nethereum.Web3.Accounts;
 
 namespace CoffeeChain.Connector
 {
@@ -15,11 +13,11 @@ namespace CoffeeChain.Connector
         private static HexBigInteger DefaultGasToUse = new HexBigInteger(140000);
         private static HexBigInteger DefaultGasValue = new HexBigInteger(144000000000000000);
 
-        private readonly Account _account;
+        private readonly IAccount _account;
         private readonly Web3 _web3;
         private readonly Contract _contract;
 
-        public CoffeeEconomyService(Account account, Web3 web3, string address)
+        public CoffeeEconomyService(IAccount account, Web3 web3, string address)
         {
             _account = account;
             _web3 = web3;
