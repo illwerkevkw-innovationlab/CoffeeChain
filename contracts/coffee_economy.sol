@@ -13,12 +13,31 @@ contract Mortal {
         owner = msg.sender;
     }
     
+    event ContractOwnershipChanged(address oldOwner, address newOwner);
+    
+    modifier isOwner {
+        require(msg.sender == owner);
+        _;
+    }
+    
+    modifier noBalance {
+        require(address(this).balance == 0);
+        _;
+    }
+    
 	/// @notice Can be used to destroy the contract.
 	/// @dev Can only be executed by the owner of the contract. The contract may not hold any Ether.
-    function kill() public {
-        require(msg.sender == owner);
-        require(address(this).balance === 0);
+    function kill() public isOwner noBalance {
         selfdestruct(owner);
+    }
+    
+    /// @notice Can be used to transfer ownership of the contract to another wallet.
+    /// @dev Can only be executed by the owner of the contract. Once the ownership is transfered, the old
+    /// owner does not have access to the contract anymore.
+    function transferOwnership(address newOwner) public isOwner {
+        owner = newOwner;
+        
+        emit ContractOwnershipChanged(msg.sender, newOwner);
     }
 }
 
