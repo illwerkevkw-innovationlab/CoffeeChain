@@ -15,6 +15,14 @@
             <Color x:Key="MediumGrayTextColor">#4d4d4d</Color>
             <Color x:Key="LightTextColor">#999999</Color>
 
+            <Color x:Key="AccountSectionColor">#F4BF42</Color>
+            <Color x:Key="BuyCoffeeSectionColor">#69E05E</Color>
+            <Color x:Key="CoffeeMakerSectionColor">#5795F9</Color>
+            <Color x:Key="DashboardSectionColor">#2196F3</Color>
+            <Color x:Key="SettingsSectionColor">#707070</Color>
+            <Color x:Key="TokenTransferSectionColor">#F44141</Color>
+            <Color x:Key="TransactionSectionColor">#B286E8</Color>
+
             <Style TargetType="NavigationPage">
                 <Setter Property="BarBackgroundColor" Value="{StaticResource Primary}" />
                 <Setter Property="BarTextColor" Value="White" />

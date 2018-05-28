@@ -81,8 +81,8 @@ namespace CoffeeChain.App
             IsLoaded = true;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        public new event PropertyChangedEventHandler PropertyChanged;
+        protected override void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             var changed = PropertyChanged;
             if (changed == null)
