@@ -3,9 +3,40 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CoffeeChain.App.Views.BuyCoffeePage">
     <ContentPage.Content>
-        <StackLayout Padding="10">
-            <Button Text="Scan QR Code" x:Name="btnScan" Clicked="btnScan_ClickedAsync" />
-            <Entry x:Name="txtBarcode" Placeholder="Der gescannte Text wird hier angezeigt" />
-        </StackLayout>
+        <ScrollView>
+            <StackLayout>
+                <TableView IsEnabled="{Binding IsLoaded}">
+                    <TableRoot>
+                        <TableSection>
+                            <EntryCell Text="{Binding CoffeeMaker}" />
+                            <ViewCell>
+                                <Button Text="Scan QR Code" HorizontalOptions="Fill" VerticalOptions="Fill" Clicked="btnScan_ClickedAsync" />
+                            </ViewCell>
+                            <ViewCell>
+                                <Picker Title="Programm auswählen" ItemsSource="{Binding CoffeePrograms}" ItemDisplayBinding="{Binding Name}"
+                                        SelectedIndex="{Binding SelectedCoffeeProgram}" />
+                            </ViewCell>
+                            <EntryCell Label="Anzahl" Text="{Binding NumberOfCoffees}" />
+                            <ViewCell>
+                                <Button Text="Kaffee kaufen" HorizontalOptions="Fill" VerticalOptions="Fill" TextColor="White"
+                                    BackgroundColor="Red" Command="{Binding ExecuteCoffeePurchaseCommand}" />
+                            </ViewCell>
+                        </TableSection>
+                    </TableRoot>
+                </TableView>
+                <Grid VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" IsVisible="{Binding IsBusy}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <ActivityIndicator Grid.Row="1" HorizontalOptions="Center" IsRunning="True" Color="{StaticResource BuyCoffeeSectionColor}" />
+                    <Label Grid.Row="2" HorizontalOptions="Center" Text="Kaufe Kaffee ..." TextColor="{StaticResource MediumGrayTextColor}" />
+                </Grid>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

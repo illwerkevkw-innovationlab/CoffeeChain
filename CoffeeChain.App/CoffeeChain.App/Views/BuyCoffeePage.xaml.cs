@@ -1,4 +1,6 @@
 ﻿using System;
+using CoffeeChain.App.ViewModels;
+using CommonServiceLocator;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using ZXing.Net.Mobile.Forms;
@@ -8,9 +10,15 @@ namespace CoffeeChain.App.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class BuyCoffeePage : ContentPage
     {
+        private BuyCoffeeViewModel _viewModel;
+
         public BuyCoffeePage ()
         {
             InitializeComponent ();
+
+            _viewModel = ServiceLocator.Current.GetInstance<BuyCoffeeViewModel>();
+
+            BindingContext = _viewModel;
         }
 
         private async void btnScan_ClickedAsync(object sender, EventArgs e)
@@ -22,10 +30,12 @@ namespace CoffeeChain.App.Views
             {
                 Device.BeginInvokeOnMainThread(async () =>
                 {
+                    scan.IsScanning = false;
                     await Navigation.PopAsync();
-                    txtBarcode.Text = result.Text;
+                    _viewModel.CoffeeMaker = result.Text;
                 });
             };
+            scan.IsScanning = true;
         }
     }
 }
