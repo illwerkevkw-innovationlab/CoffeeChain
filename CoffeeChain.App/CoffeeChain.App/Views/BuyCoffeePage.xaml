@@ -4,7 +4,8 @@
              x:Class="CoffeeChain.App.Views.BuyCoffeePage">
     <ContentPage.Content>
         <StackLayout Padding="10">
-            <Label Text="This page will offer a way to buy coffee." />
+            <Button Text="Scan QR Code" x:Name="btnScan" Clicked="btnScan_ClickedAsync" />
+            <Entry x:Name="txtBarcode" Placeholder="Der gescannte Text wird hier angezeigt" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
