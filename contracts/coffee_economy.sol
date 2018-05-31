@@ -13,7 +13,7 @@ contract Mortal {
         owner = msg.sender;
     }
     
-    event ContractOwnershipChanged(address oldOwner, address newOwner);
+    event ContractOwnershipChanged(address indexed oldOwner, address indexed newOwner);
     
     modifier isOwner {
         require(msg.sender == owner);
@@ -98,14 +98,14 @@ contract CoffeeMakerEconomy is Mortal {
     mapping(address => Customer) private customers;
     mapping(address => bool) private authorizedExchangeWallets;
 	
-    event ExchangeWalletAuthorized(address wallet);
-    event CustomerAdded(address wallet);
-    event CoffeeMakerAdded(address wallet, address owner);
-    event CoffeeMakerProgramAdded(address coffeeMaker, string name, uint price);
-    event CoffeeBought(address coffeeMaker, uint8 program, uint8 amount);
-    event TokensBought(address customer, uint tokens);
-    event TokensSold(address customer, uint tokens);
-    event TokensTransfered(address sender, address recipient, uint tokens);
+    event ExchangeWalletAuthorized(address indexed wallet);
+    event CustomerAdded(address indexed wallet);
+    event CoffeeMakerAdded(address indexed wallet, address indexed owner);
+    event CoffeeMakerProgramAdded(address indexed coffeeMaker, string indexed name, uint indexed price);
+    event CoffeeBought(address indexed coffeeMaker, uint8 indexed program, uint8 indexed amount);
+    event TokensBought(address indexed customer, uint indexed tokens);
+    event TokensSold(address indexed customer, uint indexed tokens);
+    event TokensTransfered(address indexed sender, address indexed recipient, uint indexed tokens);
     
     modifier isAuthorizedWallet {
         require(authorizedExchangeWallets[msg.sender] == true);
