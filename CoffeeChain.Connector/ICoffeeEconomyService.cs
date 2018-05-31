@@ -1,6 +1,8 @@
-﻿using System.Numerics;
+﻿using System.Collections.Generic;
+using System.Numerics;
 using System.Threading.Tasks;
 using CoffeeChain.Connector.FunctionOutputs;
+using Nethereum.Contracts;
 
 namespace CoffeeChain.Connector
 {
@@ -32,5 +34,7 @@ namespace CoffeeChain.Connector
         Task<CoffeeMakerProgram> GetCoffeeMakerProgramDetailsAsync(string wallet, int program);
 
         Task<int> GetCoffeeMakerProgramCountAsync(string wallet);
+
+        Task<IList<EventLog<CoffeeBoughtEvent>>> GetCoffeeBoughtEventsForWallet(string wallet);
     }
 }
