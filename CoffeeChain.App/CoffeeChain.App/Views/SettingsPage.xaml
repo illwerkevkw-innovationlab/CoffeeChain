@@ -3,8 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CoffeeChain.App.Views.SettingsPage">
     <ContentPage.Content>
-        <StackLayout Padding="10">
-            <Label Text="This page will display a list of available settings." />
-        </StackLayout>
+        <ScrollView>
+            <TableView>
+                <TableRoot>
+                    <TableSection>
+                        <EntryCell Label="Server IP" Text="{Binding ServerIpAddress}" />
+                        <EntryCell Label="Chain ID" Text="{Binding ChainId}" />
+                        <EntryCell Label="Contract Adresse" Text="{Binding ContractAddress}" />
+                        <EntryCell Label="Wallet Adresse" Text="{Binding PublicWalletAddress}" />
+                        <EntryCell Label="Privater Schlüssel" Text="{Binding PrivateWalletKey}" />
+                    </TableSection>
+                </TableRoot>
+            </TableView>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
