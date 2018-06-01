@@ -80,6 +80,10 @@ namespace CoffeeChain.Terminal
                     await CallGetCoffeeBoughtEventLog();
                     break;
 
+                case "15": // CREATE New Wallet
+                    await PerformCreationOfNewWallet();
+                    break;
+
                 default:
                     Console.WriteLine("Invalid input. Please select a valid option from the list of options.");
                     break;
@@ -242,6 +246,14 @@ namespace CoffeeChain.Terminal
             }
         }
 
+        private async Task PerformCreationOfNewWallet()
+        {
+            var passPhrase = AskFor("pass phrase");
+
+            var newAccount = await _web3.Personal.NewAccount.SendRequestAsync(passPhrase);
+            Console.WriteLine($"The new account: {newAccount}");
+        }
+
         private void PrintMenu()
         {
             Console.WriteLine(@"What would you like to do? Please enter one of the following numbers:
@@ -259,6 +271,7 @@ namespace CoffeeChain.Terminal
     12   ---     Count Coffeemaker Programs
     13   ---     Get Program Details
     14   ---     Get EventLog for CoffeeBought
+    15   ---     Create New Wallet
     0    ---     Close");
         }
 
