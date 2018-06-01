@@ -1,5 +1,6 @@
 ﻿using System;
 using CoffeeChain.App.Models;
+using Rg.Plugins.Popup.Extensions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -13,6 +14,16 @@ namespace CoffeeChain.App.Views
             InitializeComponent();
 
             MasterPage.ListView.ItemSelected += ListView_ItemSelected;
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+
+            if (!Settings.Current.IsWalletAvailable)
+            {
+                await Detail.Navigation.PushPopupAsync(new AskForAccountPopup());
+            }
         }
 
         private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)

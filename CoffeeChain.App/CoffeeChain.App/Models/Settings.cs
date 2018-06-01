@@ -42,5 +42,7 @@ namespace CoffeeChain.App.Models
             get => AppSettings.GetValueOrDefault(nameof(PrivateWalletKey), "ba303798ccf5db5b474d133397fe45fd665a46358720163dfd48bc73d219adc6");
             set => AppSettings.AddOrUpdateValue(nameof(PrivateWalletKey), value);
         }
+
+        public bool IsWalletAvailable => AppSettings.Contains(nameof(PrivateWalletKey)) && AppSettings.Contains(nameof(PublicWalletAddress));
     }
 }
