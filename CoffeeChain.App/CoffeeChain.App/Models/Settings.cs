@@ -1,4 +1,6 @@
-﻿using Plugin.Settings;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
+using Plugin.Settings;
 using Plugin.Settings.Abstractions;
 
 namespace CoffeeChain.App.Models
@@ -44,5 +46,20 @@ namespace CoffeeChain.App.Models
         }
 
         public bool IsWalletAvailable => AppSettings.Contains(nameof(PrivateWalletKey)) && AppSettings.Contains(nameof(PublicWalletAddress));
+
+        public List<CoffeeMaker> KnownCoffeeMakers
+        {
+            //get => JsonConvert.DeserializeObject<List<CoffeeMaker>>(AppSettings.GetValueOrDefault(nameof(KnownCoffeeMakers), "[]"));
+            get
+            {
+                var cm = JsonConvert.DeserializeObject<List<CoffeeMaker>>(AppSettings.GetValueOrDefault(nameof(KnownCoffeeMakers), "[]"));
+                foreach (var item in cm)
+                {
+                    System.Console.WriteLine($"[STORED CM] Address: {item.Address}, Name: {item.Name}");
+                }
+                return cm;
+            }
+            set => AppSettings.AddOrUpdateValue(nameof(KnownCoffeeMakers), JsonConvert.SerializeObject(value));
+        }
     }
 }

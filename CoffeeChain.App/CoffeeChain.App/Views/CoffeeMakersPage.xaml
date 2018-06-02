@@ -3,8 +3,38 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CoffeeChain.App.Views.CoffeeMakersPage">
     <ContentPage.Content>
-        <StackLayout Padding="10">
-            <Label Text="This page will display a list of known coffee makers." />
-        </StackLayout>
+        <ScrollView>
+            <ListView ItemsSource="{Binding KnownCoffeeMakers}" HasUnevenRows="True" VerticalOptions="FillAndExpand" SelectionMode="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Vertical" Padding="15,10,15,10">
+                                <Label FontAttributes="Bold" Text="{Binding Address}" />
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Name:" />
+                                    <Label Text="{Binding Name}" Margin="5,0,0,0" />
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Typ:" />
+                                    <Label Text="{Binding MachineTypeName}" Margin="5,0,0,0" />
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Standort:" />
+                                    <Label Text="{Binding DescriptiveLocation}" Margin="5,0,0,0" />
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Abteilung:" />
+                                    <Label Text="{Binding Department}" Margin="5,0,0,0" />
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Info:" />
+                                    <Label Text="{Binding MachineInfo}" Margin="5,0,0,0" />
+                                </StackLayout>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

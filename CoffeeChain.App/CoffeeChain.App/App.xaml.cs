@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using CoffeeChain.App.Models;
+using CoffeeChain.App.Services;
 using CoffeeChain.App.Views;
 using CoffeeChain.Connector;
 using CommonServiceLocator;
@@ -35,6 +36,7 @@ namespace CoffeeChain.App
             InitializeComponent();
 
             var unityContainer = new UnityContainer();
+            unityContainer.RegisterType<CoffeeMakerStorageService>();
 
             Task.Run(() => RegisterCoffeeEconomyService(unityContainer));
 

@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using CoffeeChain.App.Models;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace CoffeeChain.App.Views
@@ -9,6 +10,8 @@ namespace CoffeeChain.App.Views
         public CoffeeMakersPage()
         {
             InitializeComponent();
+
+            BindingContext = Settings.Current;
         }
     }
 }
