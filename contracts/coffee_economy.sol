@@ -277,7 +277,7 @@ contract CoffeeMakerEconomy is Mortal {
 		
         emit CoffeeBought(coffeeMaker, program, amount);
 		
-        return  amount; coffeeMakers[coffeeMaker].programs[program].name;
+        return  amount;
     }
     
 	/// @notice Getter for the tokens on a wallet.
@@ -286,6 +286,30 @@ contract CoffeeMakerEconomy is Mortal {
 	/// @return The amount of tokens available for the given wallet.
     function getTokens(address wallet) public constant returns (uint tokens) {
         return tokenStore[wallet];
+    }
+    
+    /// @notice Getter to check if a wallet is registered as customer.
+    /// @dev Does not perform any kind of access control.
+    /// @param wallet The wallet to check for a customer registration.
+    /// @return If a customer exists for the given wallet or not.
+    function isCustomer(address wallet) public constant returns (bool trueOrFalse) {
+        return customers[wallet].exists;
+    }
+    
+    /// @notice Getter to check if a wallet is registered as coffee maker.
+    /// @dev Does not perform any kind of access control.
+    /// @param wallet The wallet to check for a coffee maker registration.
+    /// @return If a coffee maker exists for the given wallet or not.
+    function isCoffeeMaker(address wallet) public constant returns (bool trueOrFalse) {
+        return coffeeMakers[wallet].exists;
+    }
+    
+    /// @notice Getter to check if a wallet is an authorized exchange wallet.
+    /// @dev Does not perform any kind of access control.
+    /// @param wallet The wallet to check for being an authorized exchange wallet.
+    /// @return If the given wallt is an authorized exchange wallet or not.
+    function isAuthorizedExchangeWallet(address wallet) public constant returns (bool trueOrFalse) {
+        return authorizedExchangeWallets[wallet];
     }
     
 	/// @notice Getter for customer data on a wallet.
@@ -300,7 +324,9 @@ contract CoffeeMakerEconomy is Mortal {
     function getCustomerData(address wallet) public constant returns (string name, string department,
             string telephone, string email) {
         require(customers[wallet].exists == true);
+        
         Customer memory customer = customers[wallet];
+        
         return (customer.name, customer.department, customer.telephone, customer.email);
     }
 
@@ -321,7 +347,9 @@ contract CoffeeMakerEconomy is Mortal {
             string descriptiveLocation, string department, string latitude, string longitude,
             MachineType machineType, string description) {
         require(coffeeMakers[wallet].exists == true);
+        
         CoffeeMaker memory coffeeMaker = coffeeMakers[wallet];
+        
         return (coffeeMaker.owner, coffeeMaker.name, coffeeMaker.location.descriptive,
                 coffeeMaker.location.department, coffeeMaker.location.latitude, coffeeMaker.location.longitude,
                 coffeeMaker.machineInfo.machineType, coffeeMaker.machineInfo.description);
