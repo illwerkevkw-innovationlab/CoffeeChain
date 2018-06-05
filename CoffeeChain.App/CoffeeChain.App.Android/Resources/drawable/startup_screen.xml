@@ -4,6 +4,6 @@
     <color android:color="#FFFFFF"/>
   </item>
   <item>
-    <bitmap android:src="@drawable/icon" android:tileMode="disabled" android:gravity="center"/>
+    <bitmap android:src="@drawable/coffeechain_icon_256" android:tileMode="disabled" android:gravity="center"/>
   </item>
 </layer-list>

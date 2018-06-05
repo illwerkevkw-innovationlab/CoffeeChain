@@ -22,12 +22,12 @@ namespace CoffeeChain.App.Droid
         protected override void OnResume()
         {
             base.OnResume();
-            Task startupWork = new Task(() => { SimulateStartup(); });
-            startupWork.Start();
+
+            Task.Run(() => SimulateStartup());
         }
 
         // Simulates background work that happens behind the splash screen
-        async void SimulateStartup()
+        private async void SimulateStartup()
         {
             Log.Debug(TAG, "Performing some startup work that takes a bit of time.");
             //await Task.Delay(1000); // Simulate a bit of startup work.
