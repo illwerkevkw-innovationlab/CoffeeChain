@@ -1,15 +1,10 @@
 ﻿using System.Windows.Input;
-using CoffeeChain.Connector;
-using Nethereum.Web3;
 using Xamarin.Forms;
 
 namespace CoffeeChain.App.ViewModels
 {
     public class TokenTransferViewModel : BaseViewModel
     {
-        private readonly Web3 _web3;
-        private readonly ICoffeeEconomyService _coffeeEconomyService;
-
         private string _recipient;
         public string Recipient
         {
@@ -26,11 +21,8 @@ namespace CoffeeChain.App.ViewModels
 
         public ICommand ExecuteTransactionCommand { get; private set; }
 
-        public TokenTransferViewModel(Web3 web3, ICoffeeEconomyService coffeeEconomyService)
+        public TokenTransferViewModel()
         {
-            _web3 = web3;
-            _coffeeEconomyService = coffeeEconomyService;
-
             Title = "Kaffee Token übertragen";
 
             ExecuteTransactionCommand = new Command(ExecuteTransaction);

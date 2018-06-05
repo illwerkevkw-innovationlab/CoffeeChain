@@ -1,15 +1,10 @@
 ﻿using System.Threading.Tasks;
 using CoffeeChain.App.Models;
-using CoffeeChain.Connector;
-using Nethereum.Web3;
 
 namespace CoffeeChain.App.ViewModels
 {
     public class AccountViewModel : BaseViewModel
     {
-        private readonly Web3 _web3;
-        private readonly ICoffeeEconomyService _coffeeEconomyService;
-
         private Customer _customer;
         public Customer Customer
         {
@@ -17,11 +12,8 @@ namespace CoffeeChain.App.ViewModels
             set { SetProperty(ref _customer, value); }
         }
 
-        public AccountViewModel(Web3 web3, ICoffeeEconomyService coffeeEconomyService)
+        public AccountViewModel()
         {
-            _web3 = web3;
-            _coffeeEconomyService = coffeeEconomyService;
-
             Title = "Balance";
             IsBusy = true;
         }

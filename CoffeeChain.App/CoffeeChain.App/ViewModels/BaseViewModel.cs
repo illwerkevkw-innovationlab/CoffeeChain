@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using CoffeeChain.App.Services;
 using CoffeeChain.Connector;
-using Xamarin.Forms;
+using Nethereum.RPC.Accounts;
+using Nethereum.Web3;
 
 namespace CoffeeChain.App.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public ICoffeeEconomyService CoffeeEconomyService => DependencyService.Get<ICoffeeEconomyService>();
+        protected readonly IAccount _account;
+        protected readonly Web3 _web3;
+        protected readonly ICoffeeEconomyService _coffeeEconomyService;
 
         private bool _isBusy = false;
         public bool IsBusy
@@ -36,6 +40,13 @@ namespace CoffeeChain.App.ViewModels
         {
             get { return _title; }
             set { SetProperty(ref _title, value); }
+        }
+
+        public BaseViewModel()
+        {
+            _account = BlockchainServicesFactory.BuildAccount();
+            _web3 = BlockchainServicesFactory.BuildWeb3(_account);
+            _coffeeEconomyService = BlockchainServicesFactory.BuildCoffeeEconomyService(_account, _web3);
         }
 
         protected bool SetProperty<T>(ref T backingStore, T value,

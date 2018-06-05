@@ -3,17 +3,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CoffeeChain.App.Services;
-using CoffeeChain.Connector;
 using CoffeeChain.Connector.FunctionOutputs;
-using Nethereum.Web3;
 using Xamarin.Forms;
 
 namespace CoffeeChain.App.ViewModels
 {
     public class BuyCoffeeViewModel : BaseViewModel
     {
-        private readonly Web3 _web3;
-        private readonly ICoffeeEconomyService _coffeeEconomyService;
         private readonly CoffeeMakerStorageService _coffeeMakerStorageService;
 
         private string _coffeeMaker;
@@ -53,10 +49,8 @@ namespace CoffeeChain.App.ViewModels
 
         public ICommand ExecuteCoffeePurchaseCommand { get; private set; }
 
-        public BuyCoffeeViewModel(Web3 web3, ICoffeeEconomyService coffeeEconomyService, CoffeeMakerStorageService coffeeMakerStorageService)
+        public BuyCoffeeViewModel(CoffeeMakerStorageService coffeeMakerStorageService)
         {
-            _web3 = web3;
-            _coffeeEconomyService = coffeeEconomyService;
             _coffeeMakerStorageService = coffeeMakerStorageService;
 
             Title = "Kaffee kaufen";
@@ -74,7 +68,7 @@ namespace CoffeeChain.App.ViewModels
 
         private async void LoadCoffeeMakerPrograms()
         {
-            if (CoffeeMaker.IsNullOrEmpty())
+            if (CoffeeMaker.IsNullOrEmpty() || !CoffeeMaker.IsValidEthereumAddress())
             {
                 return;
             }
@@ -84,21 +78,6 @@ namespace CoffeeChain.App.ViewModels
                 var details = await _coffeeEconomyService.GetCoffeeMakerDataAsync(CoffeeMaker);
                 if (details == null) { return; }
                 CoffeeMakerDetails = details;
-
-                // add the discovered coffee maker to our list of known coffee makers
-                var extendedCoffeeMakerDetails = new Models.CoffeeMaker
-                {
-                    Address = CoffeeMaker,
-                    OwenerAddress = details.OwenerAddress,
-                    Name = details.Name,
-                    Department = details.Department,
-                    DescriptiveLocation = details.DescriptiveLocation,
-                    Latitude = details.Latitude,
-                    Longitude = details.Longitude,
-                    MachineInfo = details.MachineInfo,
-                    MachineType = details.MachineType,
-                };
-                _coffeeMakerStorageService.AddOrUpdateCoffeeMakerDetails(extendedCoffeeMakerDetails);
 
                 var programs = await _coffeeEconomyService.GetCoffeeMakerProgramCountAsync(CoffeeMaker);
                 Console.WriteLine($"Found {programs} coffee programs!");
@@ -114,6 +93,21 @@ namespace CoffeeChain.App.ViewModels
                     }
                     CoffeePrograms = list;
                     SelectedCoffeeProgram = 0;
+
+                    // add the discovered coffee maker to our list of known coffee makers but only if it is a valid one
+                    var extendedCoffeeMakerDetails = new Models.CoffeeMaker
+                    {
+                        Address = CoffeeMaker,
+                        OwenerAddress = details.OwenerAddress,
+                        Name = details.Name,
+                        Department = details.Department,
+                        DescriptiveLocation = details.DescriptiveLocation,
+                        Latitude = details.Latitude,
+                        Longitude = details.Longitude,
+                        MachineInfo = details.MachineInfo,
+                        MachineType = details.MachineType,
+                    };
+                    _coffeeMakerStorageService.AddOrUpdateCoffeeMakerDetails(extendedCoffeeMakerDetails);
                 }
             }
             catch (Exception e)
