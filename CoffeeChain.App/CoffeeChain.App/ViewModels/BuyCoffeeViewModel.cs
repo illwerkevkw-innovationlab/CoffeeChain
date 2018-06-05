@@ -122,9 +122,19 @@ namespace CoffeeChain.App.ViewModels
             Console.WriteLine($"CoffeeMaker: {CoffeeMaker}, Program: {SelectedCoffeeProgram}, NumberOfCoffees: {NumberOfCoffees}");
             Console.WriteLine($"Sender: {_web3.TransactionManager.Account.Address}");
 
-            if (CoffeeMaker.IsNullOrEmpty() || SelectedCoffeeProgram < 0 || NumberOfCoffees <= 0)
+            if (CoffeeMaker.IsNullOrEmpty() 
+                || !CoffeeMaker.IsValidEthereumAddress() 
+                || SelectedCoffeeProgram < 0 
+                || NumberOfCoffees <= 0)
             {
                 Console.WriteLine("Invalid input for transaction. Aborting.");
+                return;
+            }
+
+            var costs = CoffeePrograms[SelectedCoffeeProgram].Price * NumberOfCoffees;
+            if ((await _coffeeEconomyService.GetTokensAsync(_account.Address)) < costs)
+            {
+                Console.WriteLine("Not enough coffee tokens to buy this much coffee.");
                 return;
             }
 
