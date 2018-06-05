@@ -11,7 +11,7 @@
                         <EntryCell Label="Chain ID" Text="{Binding ChainId}" />
                         <EntryCell Label="Contract Adresse" Text="{Binding ContractAddress}" />
                         <EntryCell Label="Wallet Adresse" Text="{Binding PublicWalletAddress}" />
-                        <EntryCell Label="Privater Schlüssel" Text="{Binding PrivateWalletKey}" />
+                        <EntryCell Label="Passwort" Text="{Binding Passphrase}" />
                     </TableSection>
                 </TableRoot>
             </TableView>

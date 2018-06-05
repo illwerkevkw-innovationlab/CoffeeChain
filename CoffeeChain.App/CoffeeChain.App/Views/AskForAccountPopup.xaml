@@ -22,8 +22,9 @@
             <StackLayout Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Center" Padding="20"
                      BackgroundColor="White">
                 <Label Text="Hast Du bereits einen Account?" HorizontalTextAlignment="Center" />
-                <Button Text="Ja, habe bereits einen!" />
-                <Button Text="Nein, brauche einen Neuen!" />
+                <Button Text="Ja, habe bereits einen!" Clicked="btnOldAccount_ClickedAsync" />
+                <Button Text="Nein, brauche einen Neuen!" Clicked="btnNewAccount_ClickedAsync"
+                        BackgroundColor="{StaticResource Primary}" TextColor="{StaticResource PrimaryText}" />
             </StackLayout>
         </Frame>
     </pages:PopupPage.Content>

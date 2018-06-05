@@ -35,30 +35,21 @@ namespace CoffeeChain.App.Models
 
         public string PublicWalletAddress
         {
-            get => AppSettings.GetValueOrDefault(nameof(PublicWalletAddress), "0x54585691af6387f8a23eae6f280d2b6a4c9dc586");
+            get => AppSettings.GetValueOrDefault(nameof(PublicWalletAddress), string.Empty);
             set => AppSettings.AddOrUpdateValue(nameof(PublicWalletAddress), value);
         }
 
-        public string PrivateWalletKey
+        public string Passphrase
         {
-            get => AppSettings.GetValueOrDefault(nameof(PrivateWalletKey), "ba303798ccf5db5b474d133397fe45fd665a46358720163dfd48bc73d219adc6");
-            set => AppSettings.AddOrUpdateValue(nameof(PrivateWalletKey), value);
+            get => AppSettings.GetValueOrDefault(nameof(Passphrase), string.Empty);
+            set => AppSettings.AddOrUpdateValue(nameof(Passphrase), value);
         }
 
-        public bool IsWalletAvailable => AppSettings.Contains(nameof(PrivateWalletKey)) && AppSettings.Contains(nameof(PublicWalletAddress));
+        public bool IsWalletAvailable => AppSettings.Contains(nameof(PublicWalletAddress));
 
         public List<CoffeeMaker> KnownCoffeeMakers
         {
-            //get => JsonConvert.DeserializeObject<List<CoffeeMaker>>(AppSettings.GetValueOrDefault(nameof(KnownCoffeeMakers), "[]"));
-            get
-            {
-                var cm = JsonConvert.DeserializeObject<List<CoffeeMaker>>(AppSettings.GetValueOrDefault(nameof(KnownCoffeeMakers), "[]"));
-                foreach (var item in cm)
-                {
-                    System.Console.WriteLine($"[STORED CM] Address: {item.Address}, Name: {item.Name}");
-                }
-                return cm;
-            }
+            get => JsonConvert.DeserializeObject<List<CoffeeMaker>>(AppSettings.GetValueOrDefault(nameof(KnownCoffeeMakers), "[]"));
             set => AppSettings.AddOrUpdateValue(nameof(KnownCoffeeMakers), JsonConvert.SerializeObject(value));
         }
     }

@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+﻿using Rg.Plugins.Popup.Extensions;
 
 namespace CoffeeChain.App.Views
 {
@@ -7,56 +7,6 @@ namespace CoffeeChain.App.Views
         public AskForAccountPopup()
         {
             InitializeComponent();
-        }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-        }
-
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
-        }
-
-        protected override void OnAppearingAnimationBegin()
-        {
-            base.OnAppearingAnimationBegin();
-        }
-
-        protected override void OnAppearingAnimationEnd()
-        {
-            base.OnAppearingAnimationEnd();
-        }
-
-        protected override void OnDisappearingAnimationBegin()
-        {
-            base.OnDisappearingAnimationBegin();
-        }
-
-        protected override void OnDisappearingAnimationEnd()
-        {
-            base.OnDisappearingAnimationEnd();
-        }
-
-        protected override Task OnAppearingAnimationBeginAsync()
-        {
-            return base.OnAppearingAnimationBeginAsync();
-        }
-
-        protected override Task OnAppearingAnimationEndAsync()
-        {
-            return base.OnAppearingAnimationEndAsync();
-        }
-
-        protected override Task OnDisappearingAnimationBeginAsync()
-        {
-            return base.OnDisappearingAnimationBeginAsync();
-        }
-
-        protected override Task OnDisappearingAnimationEndAsync()
-        {
-            return base.OnDisappearingAnimationEndAsync();
         }
 
         // Invoked when a hardware back button is pressed
@@ -73,6 +23,17 @@ namespace CoffeeChain.App.Views
             // Return false if you don't want to close this popup page when a background of the popup page is clicked
             //return base.OnBackgroundClicked();
             return false;
+        }
+
+        private async void btnOldAccount_ClickedAsync(object sender, System.EventArgs e)
+        {
+            await Navigation.PushPopupAsync(new OldAccountFormPage());
+        }
+
+        private async void btnNewAccount_ClickedAsync(object sender, System.EventArgs e)
+        {
+            // TODO: implement creation of new account
+            await Navigation.PopAllPopupAsync();
         }
     }
 }
