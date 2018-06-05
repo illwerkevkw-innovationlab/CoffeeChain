@@ -1,12 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using CoffeeChain.App.Models;
 using CoffeeChain.App.Services;
 using CoffeeChain.App.Views;
-using CoffeeChain.Connector;
 using CommonServiceLocator;
-using Nethereum.Web3.Accounts;
 using Unity;
 using Unity.ServiceLocation;
 using Xamarin.Forms;
@@ -38,10 +34,10 @@ namespace CoffeeChain.App
             var unityContainer = new UnityContainer();
             unityContainer.RegisterType<CoffeeMakerStorageService>();
 
-            Task.Run(() => RegisterCoffeeEconomyService(unityContainer));
-
             var unityServiceLocator = new UnityServiceLocator(unityContainer);
             ServiceLocator.SetLocatorProvider(() => unityServiceLocator);
+
+            IsLoaded = true;
 
             MainPage = new MainPage();
         }
@@ -61,19 +57,18 @@ namespace CoffeeChain.App
             // Handle when your app resumes
         }
 
-        private void RegisterCoffeeEconomyService(IUnityContainer container)
-        {
-            //var account = Account.LoadFromKeyStore(KeyFile, PassPhrase);
-            //var account = new ManagedAccount(AccountAddress, PassPhrase);
-            var account = new Account(Settings.Current.PrivateWalletKey, Settings.Current.ChainId);
-            var web3 = new Nethereum.Web3.Web3(account, Settings.Current.ServerIpAddress);
-            var service = new CoffeeEconomyService(account, web3, Settings.Current.ContractAddress);
+        //private void RegisterCoffeeEconomyService(IUnityContainer container)
+        //{
+        //    //var account = Account.LoadFromKeyStore(KeyFile, PassPhrase);
+        //    //var account = new Account(Settings.Current.PrivateWalletKey, Settings.Current.ChainId);
+        //    var account = new ManagedAccount(Settings.Current.PublicWalletAddress, Settings.Current.Passphrase);
+        //    var web3 = new Nethereum.Web3.Web3(account, Settings.Current.ServerIpAddress);
+        //    var service = new CoffeeEconomyService(account, web3, Settings.Current.ContractAddress);
 
-            container.RegisterInstance(web3);
-            container.RegisterInstance<ICoffeeEconomyService>(service);
+        //    container.RegisterInstance(web3);
+        //    container.RegisterInstance<ICoffeeEconomyService>(service);
 
-            IsLoaded = true;
-        }
+        //}
 
         public new event PropertyChangedEventHandler PropertyChanged;
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = "")
