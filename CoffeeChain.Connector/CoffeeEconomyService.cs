@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Numerics;
 using System.Threading.Tasks;
 using CoffeeChain.Connector.FunctionOutputs;
@@ -81,9 +80,24 @@ namespace CoffeeChain.Connector
             return await BuyCoffee.SendTransactionAsync(_account.Address, DefaultGasToUse, DefaultGasValue, null, coffeeMaker, program, amount);
         }
 
-        public async Task<int> GetTokensAsync(string address)
+        public async Task<int> GetTokensAsync(string wallet)
         {
-            return await _contract.GetFunction("getTokens").CallAsync<int>(address);
+            return await _contract.GetFunction("getTokens").CallAsync<int>(wallet);
+        }
+
+        public async Task<bool> IsCustomerAsync(string wallet)
+        {
+            return await _contract.GetFunction("isCustomer").CallAsync<bool>(wallet);
+        }
+
+        public async Task<bool> IsCoffeeMakerAsync(string wallet)
+        {
+            return await _contract.GetFunction("isCoffeeMaker").CallAsync<bool>(wallet);
+        }
+
+        public async Task<bool> IsAuthorizedExchangeWalletAsync(string wallet)
+        {
+            return await _contract.GetFunction("isAuthorizedExchangeWallet").CallAsync<bool>(wallet);
         }
 
         public async Task<Customer> GetCustomerDataAsync(string wallet)

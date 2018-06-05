@@ -25,7 +25,13 @@ namespace CoffeeChain.Connector
 
         Task<string> BuyCoffeeAsync(string coffeeMaker, int program, int amount);
 
-        Task<int> GetTokensAsync(string address);
+        Task<int> GetTokensAsync(string wallet);
+
+        Task<bool> IsCustomerAsync(string wallet);
+
+        Task<bool> IsCoffeeMakerAsync(string wallet);
+
+        Task<bool> IsAuthorizedExchangeWalletAsync(string wallet);
 
         Task<Customer> GetCustomerDataAsync(string wallet);
 
