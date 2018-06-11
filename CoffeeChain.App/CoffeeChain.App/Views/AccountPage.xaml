@@ -4,7 +4,7 @@
              x:Class="CoffeeChain.App.Views.AccountPage"
              Title="{Binding Title}">
     <ContentPage.Content>
-        <ScrollView>
+        <ScrollView BackgroundColor="{StaticResource LightBackgroundColor}">
             <StackLayout>
                 <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" IsVisible="{Binding IsBusy}">
                     <Grid.ColumnDefinitions>

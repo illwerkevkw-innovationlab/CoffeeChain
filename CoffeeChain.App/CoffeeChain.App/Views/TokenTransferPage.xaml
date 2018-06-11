@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CoffeeChain.App.Views.TokenTransferPage">
     <ContentPage.Content>
-        <ScrollView>
+        <ScrollView BackgroundColor="{StaticResource LightBackgroundColor}">
             <StackLayout>
                 <TableView IsEnabled="{Binding IsLoaded}">
                     <TableRoot>
@@ -11,8 +11,9 @@
                             <EntryCell Label="Empfänger" Text="{Binding Recipient}" />
                             <EntryCell Label="Anzahl Tokens" Text="{Binding Tokens}" />
                             <ViewCell>
-                                <Button Text="Token übertragen" HorizontalOptions="Fill" VerticalOptions="Fill" TextColor="White"
-                                    BackgroundColor="Red" Command="{Binding ExecuteTransactionCommand}" />
+                                <Button Text="Token übertragen" HorizontalOptions="Fill" VerticalOptions="Fill" 
+                                        TextColor="{StaticResource DangerTextColor}" BackgroundColor="{StaticResource DangerColor}" 
+                                        Command="{Binding ExecuteTransactionCommand}" />
                             </ViewCell>
                         </TableSection>
                     </TableRoot>

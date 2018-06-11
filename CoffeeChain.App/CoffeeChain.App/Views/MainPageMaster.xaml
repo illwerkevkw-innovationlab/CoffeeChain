@@ -4,10 +4,10 @@
              x:Class="CoffeeChain.App.Views.MainPageMaster"
              Title="Master">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout BackgroundColor="{StaticResource LightBackgroundColor}">
             <ListView x:Name="MenuItemsListView" SeparatorVisibility="None" HasUnevenRows="true" ItemsSource="{Binding MenuItems}">
                 <ListView.Header>
-                    <Grid BackgroundColor="#03A9F4">
+                    <Grid BackgroundColor="{StaticResource Primary}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="10"/>
                             <ColumnDefinition Width="*"/>
@@ -18,7 +18,7 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="10"/>
                         </Grid.RowDefinitions>
-                        <Label Grid.Column="1" Grid.Row="1" Text="CoffeeChain" FontSize="Medium" FontAttributes="Bold" TextColor="White" />
+                        <Label Grid.Column="1" Grid.Row="1" Text="CoffeeChain" FontSize="Medium" FontAttributes="Bold" TextColor="{StaticResource PrimaryText}" />
                     </Grid>
                 </ListView.Header>
                 <ListView.ItemTemplate>

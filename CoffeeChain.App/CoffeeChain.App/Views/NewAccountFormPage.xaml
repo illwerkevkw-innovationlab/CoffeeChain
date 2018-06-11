@@ -5,7 +5,7 @@
     xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
     x:Class="CoffeeChain.App.Views.NewAccountFormPage">
     <pages:PopupPage.Content>
-        <Frame BorderColor="DarkGray" Margin="30">
+        <Frame BorderColor="DarkGray" Margin="30" BackgroundColor="{StaticResource LightBackgroundColor}">
             <ScrollView>
                 <StackLayout Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Center" Padding="20"
                      BackgroundColor="White">

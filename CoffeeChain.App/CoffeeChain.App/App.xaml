@@ -6,22 +6,28 @@
              x:Class="CoffeeChain.App.App">
     <Application.Resources>
         <ResourceDictionary>
-            <Color x:Key="Primary">#2196F3</Color>
-            <Color x:Key="PrimaryDark">#1976D2</Color>
+            <Color x:Key="Primary">#BC5E1B</Color>
             <Color x:Key="PrimaryText">#FFFFFF</Color>
+            <Color x:Key="PrimaryDark">#8F4814</Color>
+            <Color x:Key="PrimaryDarkText">#FFFFFF</Color>
             <Color x:Key="Accent">#96D1FF</Color>
-            <Color x:Key="LightBackgroundColor">#FAFAFA</Color>
-            <Color x:Key="DarkBackgroundColor">#C0C0C0</Color>
+            <Color x:Key="LightBackgroundColor">#FBECE1</Color>
+            <Color x:Key="DarkBackgroundColor">#9B7255</Color>
             <Color x:Key="MediumGrayTextColor">#4D4D4D</Color>
             <Color x:Key="LightTextColor">#999999</Color>
 
-            <Color x:Key="AccountSectionColor">#F4BF42</Color>
-            <Color x:Key="BuyCoffeeSectionColor">#69E05E</Color>
-            <Color x:Key="CoffeeMakerSectionColor">#5795F9</Color>
-            <Color x:Key="DashboardSectionColor">#2196F3</Color>
-            <Color x:Key="SettingsSectionColor">#707070</Color>
-            <Color x:Key="TokenTransferSectionColor">#F44141</Color>
-            <Color x:Key="TransactionSectionColor">#B286E8</Color>
+            <Color x:Key="AccountSectionColor">#EFA30A</Color>
+            <Color x:Key="BuyCoffeeSectionColor">#1ED269</Color>
+            <Color x:Key="CoffeeMakerSectionColor">#D37F14</Color>
+            <Color x:Key="DashboardSectionColor">#D2691E</Color>
+            <Color x:Key="SettingsSectionColor">#7F7771</Color>
+            <Color x:Key="TokenTransferSectionColor">#C92913</Color>
+            <Color x:Key="TransactionSectionColor">#D34714</Color>
+
+            <Color x:Key="DangerColor">#D21E2D</Color>
+            <Color x:Key="DangerTextColor">#FFFFFF</Color>
+            <Color x:Key="SuccessColor">#1ED269</Color>
+            <Color x:Key="SuccessTextColor">#FFFFFF</Color>
 
             <Style TargetType="NavigationPage">
                 <Setter Property="BarBackgroundColor" Value="{StaticResource Primary}" />

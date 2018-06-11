@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CoffeeChain.App.Views.DashboardPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" IsVisible="{Binding Source={Static Application.Current}, Path=IsLoading}">
+        <StackLayout BackgroundColor="{StaticResource LightBackgroundColor}">
+            <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" 
+                  IsVisible="{Binding Source={Static Application.Current}, Path=IsLoading}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>

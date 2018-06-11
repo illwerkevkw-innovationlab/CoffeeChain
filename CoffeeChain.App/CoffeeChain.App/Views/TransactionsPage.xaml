@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CoffeeChain.App.Views.TransactionsPage">
     <ContentPage.Content>
-        <StackLayout Padding="10">
+        <StackLayout Padding="10" BackgroundColor="{StaticResource LightBackgroundColor}">
             <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" IsVisible="{Binding IsBusy}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
