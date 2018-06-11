@@ -76,8 +76,12 @@ namespace CoffeeChain.Terminal
                     await CallGetProgramDetails();
                     break;
 
-                case "14":
-                    
+                case "14": // CALL Get CoffeeBought EventLogs
+                    await CallGetCoffeeBoughtEventLog();
+                    break;
+
+                case "15": // CREATE New Wallet
+                    await PerformCreationOfNewWallet();
                     break;
 
                 default:
@@ -227,6 +231,29 @@ namespace CoffeeChain.Terminal
             Console.WriteLine($"There are {count} programs available.");
         }
 
+        private async Task CallGetCoffeeBoughtEventLog()
+        {
+            var target = AskForTargetWallet();
+
+            var data = await _coffeeEconomyService.GetCoffeeBoughtEventsForWallet(target);
+            if (data.Count == 0)
+            {
+                Console.WriteLine("No event data found for wallet.");
+            }
+            foreach (var elem in data)
+            {
+                Console.WriteLine($"Wallet: {elem.Event.CoffeeMaker}, Program: {elem.Event.Program}, Amount: {elem.Event.Amount}");
+            }
+        }
+
+        private async Task PerformCreationOfNewWallet()
+        {
+            var passPhrase = AskFor("pass phrase");
+
+            var newAccount = await _web3.Personal.NewAccount.SendRequestAsync(passPhrase);
+            Console.WriteLine($"The new account: {newAccount}");
+        }
+
         private void PrintMenu()
         {
             Console.WriteLine(@"What would you like to do? Please enter one of the following numbers:
@@ -243,6 +270,8 @@ namespace CoffeeChain.Terminal
     11   ---     Display Coffeemaker Data
     12   ---     Count Coffeemaker Programs
     13   ---     Get Program Details
+    14   ---     Get EventLog for CoffeeBought
+    15   ---     Create New Wallet
     0    ---     Close");
         }
 

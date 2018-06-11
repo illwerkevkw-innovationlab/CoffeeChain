@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CoffeeChain.App.Views.TransactionsPage">
+    <ContentPage.Content>
+        <StackLayout Padding="10" BackgroundColor="{StaticResource LightBackgroundColor}">
+            <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" IsVisible="{Binding IsBusy}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <ActivityIndicator Grid.Row="1" HorizontalOptions="Center" IsRunning="True" Color="{StaticResource TransactionSectionColor}" />
+                <Label Grid.Row="2" HorizontalOptions="Center" Text="Lade Transaktionshistorie ..." TextColor="{StaticResource MediumGrayTextColor}" />
+            </Grid>
+            <ListView ItemsSource="{Binding Transactions}" IsVisible="{Binding IsLoaded}"
+                      HorizontalOptions="Fill" VerticalOptions="FillAndExpand" Margin="10,10,10,10">
+                <ListView.HeaderTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0,5,0,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="100" />
+                            </Grid.ColumnDefinitions>
+                            <Label Text="Addresse" FontAttributes="Bold" />
+                            <Label Grid.Column="1" Text="Programm" FontAttributes="Bold" HorizontalTextAlignment="End" />
+                            <Label Grid.Column="2" Text="Anzahl" FontAttributes="Bold" HorizontalTextAlignment="End" />
+                        </Grid>
+                    </DataTemplate>
+                </ListView.HeaderTemplate>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0,5,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="100" />
+                            </Grid.ColumnDefinitions>
+                            <Label Text="{Binding Event.CoffeeMaker}" FontAttributes="Bold" />
+                            <Label Grid.Column="1" Text="{Binding Event.Program}" HorizontalTextAlignment="End" />
+                            <Label Grid.Column="2" Text="{Binding Event.Amount}" HorizontalTextAlignment="End" />
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

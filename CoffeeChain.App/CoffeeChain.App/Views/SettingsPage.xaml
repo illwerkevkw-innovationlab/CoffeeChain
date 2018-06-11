@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CoffeeChain.App.Views.SettingsPage">
+    <ContentPage.Content>
+        <ScrollView BackgroundColor="{StaticResource LightBackgroundColor}">
+            <TableView>
+                <TableRoot>
+                    <TableSection>
+                        <EntryCell Label="Server IP" Text="{Binding ServerIpAddress}" />
+                        <EntryCell Label="Chain ID" Text="{Binding ChainId}" />
+                        <EntryCell Label="Contract Adresse" Text="{Binding ContractAddress}" />
+                        <EntryCell Label="Wallet Adresse" Text="{Binding PublicWalletAddress}" />
+                        <EntryCell Label="Passwort" Text="{Binding Passphrase}" />
+                    </TableSection>
+                </TableRoot>
+            </TableView>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

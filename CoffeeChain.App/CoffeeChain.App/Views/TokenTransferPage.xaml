@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CoffeeChain.App.Views.TokenTransferPage">
+    <ContentPage.Content>
+        <ScrollView BackgroundColor="{StaticResource LightBackgroundColor}">
+            <StackLayout>
+                <TableView IsEnabled="{Binding IsLoaded}">
+                    <TableRoot>
+                        <TableSection>
+                            <EntryCell Label="Empfänger" Text="{Binding Recipient}" />
+                            <EntryCell Label="Anzahl Tokens" Text="{Binding Tokens}" />
+                            <ViewCell>
+                                <Button Text="Token übertragen" HorizontalOptions="Fill" VerticalOptions="Fill" 
+                                        TextColor="{StaticResource DangerTextColor}" BackgroundColor="{StaticResource DangerColor}" 
+                                        Command="{Binding ExecuteTransactionCommand}" />
+                            </ViewCell>
+                        </TableSection>
+                    </TableRoot>
+                </TableView>
+                <Grid VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" IsVisible="{Binding IsBusy}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <ActivityIndicator Grid.Row="1" HorizontalOptions="Center" IsRunning="True" Color="{StaticResource TokenTransferSectionColor}" />
+                    <Label Grid.Row="2" HorizontalOptions="Center" Text="Verarbeite Transaktion ..." TextColor="{StaticResource MediumGrayTextColor}" />
+                </Grid>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

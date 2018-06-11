@@ -9,15 +9,35 @@ contract Mortal {
     address owner;
     
 	/// @dev Sets the transaction sender as owner of the contract.
-    function Mortal() public {
+    constructor() public {
         owner = msg.sender;
     }
     
-	/// @notice Can be used to destroy the contract.
-	/// @dev Can only be executed by the owner of the contract. Will refund the contract balance to the owner.
-    function kill() public {
+    event ContractOwnershipChanged(address indexed oldOwner, address indexed newOwner);
+    
+    modifier isOwner {
         require(msg.sender == owner);
+        _;
+    }
+    
+    modifier noBalance {
+        require(address(this).balance == 0);
+        _;
+    }
+    
+	/// @notice Can be used to destroy the contract.
+	/// @dev Can only be executed by the owner of the contract. The contract may not hold any Ether.
+    function kill() public isOwner noBalance {
         selfdestruct(owner);
+    }
+    
+    /// @notice Can be used to transfer ownership of the contract to another wallet.
+    /// @dev Can only be executed by the owner of the contract. Once the ownership is transfered, the old
+    /// owner does not have access to the contract anymore.
+    function transferOwnership(address newOwner) public isOwner {
+        owner = newOwner;
+        
+        emit ContractOwnershipChanged(msg.sender, newOwner);
     }
 }
 
@@ -67,7 +87,7 @@ contract CoffeeMakerEconomy is Mortal {
     }
 
 	/// @dev Sets the transaction sender as the initially only available authorized exchange party.
-    function CoffeeMakerEconomy() public {
+    constructor() public {
         authorizedExchangeWallets[msg.sender] = true;
     }
 	
@@ -78,14 +98,14 @@ contract CoffeeMakerEconomy is Mortal {
     mapping(address => Customer) private customers;
     mapping(address => bool) private authorizedExchangeWallets;
 	
-    event ExchangeWalletAuthorized(address wallet);
-    event CustomerAdded(address wallet);
-    event CoffeeMakerAdded(address wallet, address owner);
-    event CoffeeMakerProgramAdded(address coffeeMaker, string name, uint price);
-    event CoffeeBought(address coffeeMaker, uint8 program, uint8 amount);
-    event TokensBought(address customer, uint tokens);
-    event TokensSold(address customer, uint tokens);
-    event TokensTransfered(address sender, address recipient, uint tokens);
+    event ExchangeWalletAuthorized(address indexed wallet);
+    event CustomerAdded(address indexed wallet);
+    event CoffeeMakerAdded(address indexed wallet, address indexed owner);
+    event CoffeeMakerProgramAdded(address indexed coffeeMaker, string indexed name, uint indexed price);
+    event CoffeeBought(address indexed coffeeMaker, uint8 indexed program, uint8 indexed amount);
+    event TokensBought(address indexed customer, uint indexed tokens);
+    event TokensSold(address indexed customer, uint indexed tokens);
+    event TokensTransfered(address indexed sender, address indexed recipient, uint indexed tokens);
     
     modifier isAuthorizedWallet {
         require(authorizedExchangeWallets[msg.sender] == true);
@@ -141,7 +161,16 @@ contract CoffeeMakerEconomy is Mortal {
 	/// @param locLongitude The longitude of the coffee makers location.
 	/// @param infoMachineType The machine type of the coffee maker.
 	/// @param infoDescription An additional description.
-    function addCoffeemaker(address wallet, string name, string locDescriptive, string locDepartment, string locLatitude, string locLongitude, MachineType infoMachineType, string infoDescription) public {
+    function addCoffeemaker(
+        address wallet,
+        string name,
+        string locDescriptive,
+        string locDepartment,
+        string locLatitude,
+        string locLongitude,
+        MachineType infoMachineType,
+        string infoDescription
+    ) public {
         require(wallet != 0x0);
         require(coffeeMakers[wallet].exists == false);
         require(customers[msg.sender].exists == true);
@@ -205,17 +234,19 @@ contract CoffeeMakerEconomy is Mortal {
         require(tokens > 0);
         require(tokenStore[seller] > 0);
 
-        if (tokenStore[seller] < tokens) {
-            tokens = tokenStore[seller];
+        uint tokensToSell = tokens;
+
+        if (tokenStore[seller] < tokensToSell) {
+            tokensToSell = tokenStore[seller];
         }
 
-        tokenStore[seller] -= tokens;
-        uint weiValue = (tokens / tokensPerEther) * (1 ether);
+        tokenStore[seller] -= tokensToSell;
+        uint weiValue = (tokensToSell / tokensPerEther) * (1 ether);
         msg.sender.transfer(weiValue);
 		
-        emit TokensSold(seller, tokens);
+        emit TokensSold(seller, tokensToSell);
 		
-        return tokens;
+        return tokensToSell;
     }
 
 	/// @notice Sends tokens from one wallet to another.
@@ -223,20 +254,25 @@ contract CoffeeMakerEconomy is Mortal {
 	/// @param receiver The wallet to receive the sent tokens.
 	/// @param tokens The amount of tokens to transfer.
 	/// @return The amount of tokens that have actually be transferred.
-    function transferTokens(address receiver, uint tokens) public walletIsKnown(receiver) walletIsKnown(msg.sender) returns (uint transferedTokens) {
+    function transferTokens(
+        address receiver,
+        uint tokens
+    ) public walletIsKnown(receiver) walletIsKnown(msg.sender) returns (uint transferedTokens) {
         require(tokens > 0);
         require(tokenStore[msg.sender] > 0);
         
-        if (tokenStore[msg.sender] < tokens) {
-            tokens = tokenStore[msg.sender];
+        uint tokensToTransfer = tokens;
+
+        if (tokenStore[msg.sender] < tokensToTransfer) {
+            tokensToTransfer = tokenStore[msg.sender];
         }
        
-        tokenStore[msg.sender] -= tokens;
-        tokenStore[receiver] += tokens;
+        tokenStore[msg.sender] -= tokensToTransfer;
+        tokenStore[receiver] += tokensToTransfer;
 		
-        emit TokensTransfered(msg.sender, receiver, tokens);
+        emit TokensTransfered(msg.sender, receiver, tokensToTransfer);
 		
-        return transferedTokens;
+        return tokensToTransfer;
     }
     
 	/// @notice Buys a coffee with tokens using the given program and amount.
@@ -257,15 +293,39 @@ contract CoffeeMakerEconomy is Mortal {
 		
         emit CoffeeBought(coffeeMaker, program, amount);
 		
-        return  amount; coffeeMakers[coffeeMaker].programs[program].name;
+        return  amount;
     }
     
 	/// @notice Getter for the tokens on a wallet.
 	/// @dev Does not perform any kind of access control.
 	/// @param wallet The wallet to check the token balance for.
 	/// @return The amount of tokens available for the given wallet.
-    function getTokens(address wallet) public constant returns (uint tokens) {
+    function getTokens(address wallet) public view returns (uint tokens) {
         return tokenStore[wallet];
+    }
+    
+    /// @notice Getter to check if a wallet is registered as customer.
+    /// @dev Does not perform any kind of access control.
+    /// @param wallet The wallet to check for a customer registration.
+    /// @return If a customer exists for the given wallet or not.
+    function isCustomer(address wallet) public view returns (bool trueOrFalse) {
+        return customers[wallet].exists;
+    }
+    
+    /// @notice Getter to check if a wallet is registered as coffee maker.
+    /// @dev Does not perform any kind of access control.
+    /// @param wallet The wallet to check for a coffee maker registration.
+    /// @return If a coffee maker exists for the given wallet or not.
+    function isCoffeeMaker(address wallet) public view returns (bool trueOrFalse) {
+        return coffeeMakers[wallet].exists;
+    }
+    
+    /// @notice Getter to check if a wallet is an authorized exchange wallet.
+    /// @dev Does not perform any kind of access control.
+    /// @param wallet The wallet to check for being an authorized exchange wallet.
+    /// @return If the given wallt is an authorized exchange wallet or not.
+    function isAuthorizedExchangeWallet(address wallet) public view returns (bool trueOrFalse) {
+        return authorizedExchangeWallets[wallet];
     }
     
 	/// @notice Getter for customer data on a wallet.
@@ -277,10 +337,12 @@ contract CoffeeMakerEconomy is Mortal {
 	///   "telephone": "The customers telephone number.",
 	///   "email": "The customers email address."
 	/// }
-    function getCustomerData(address wallet) public constant returns (string name, string department,
+    function getCustomerData(address wallet) public view returns (string name, string department,
             string telephone, string email) {
         require(customers[wallet].exists == true);
+        
         Customer memory customer = customers[wallet];
+        
         return (customer.name, customer.department, customer.telephone, customer.email);
     }
 
@@ -297,21 +359,30 @@ contract CoffeeMakerEconomy is Mortal {
 	///   "machineType": "The machine type of the coffee maker.",
 	///   "description": "Additional information."
 	/// }
-    function getCoffeeMakerData(address wallet) public constant returns (address owner, string name,
+    function getCoffeeMakerData(address wallet) public view returns (address owner, string name,
             string descriptiveLocation, string department, string latitude, string longitude,
             MachineType machineType, string description) {
         require(coffeeMakers[wallet].exists == true);
+        
         CoffeeMaker memory coffeeMaker = coffeeMakers[wallet];
-        return (coffeeMaker.owner, coffeeMaker.name, coffeeMaker.location.descriptive,
-                coffeeMaker.location.department, coffeeMaker.location.latitude, coffeeMaker.location.longitude,
-                coffeeMaker.machineInfo.machineType, coffeeMaker.machineInfo.description);
+        
+        return (
+            coffeeMaker.owner, 
+            coffeeMaker.name, 
+            coffeeMaker.location.descriptive,
+            coffeeMaker.location.department,
+            coffeeMaker.location.latitude,
+            coffeeMaker.location.longitude,
+            coffeeMaker.machineInfo.machineType,
+            coffeeMaker.machineInfo.description
+        );
     }
 
 	/// @notice Getter for the number of available programs of a coffee maker.
 	/// @dev Does not perform any kind of access control.
 	/// @param wallet The coffee maker to check for programs.
 	/// @return The number of available programs.
-    function getCoffeeMakerProgramCount(address wallet) public constant returns (uint8 programCount) {
+    function getCoffeeMakerProgramCount(address wallet) public view returns (uint8 programCount) {
         return coffeeMakers[wallet].programCounter;
     }
 
@@ -323,7 +394,7 @@ contract CoffeeMakerEconomy is Mortal {
 	///   "name": "The name of the coffee program (e.g. Espresso).",
 	///   "price": "The price of the coffee program."
 	/// }
-    function getCoffeeMakerProgramDetails(address wallet, uint8 program) public constant returns (string name, uint price) {
+    function getCoffeeMakerProgramDetails(address wallet, uint8 program) public view returns (string name, uint price) {
         return (coffeeMakers[wallet].programs[program].name, coffeeMakers[wallet].programs[program].price);
     }
 } 

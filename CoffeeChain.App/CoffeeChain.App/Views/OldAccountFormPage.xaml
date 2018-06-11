@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    x:Class="CoffeeChain.App.Views.OldAccountFormPage">
+    <pages:PopupPage.Content>
+        <Frame BorderColor="DarkGray" Margin="30" BackgroundColor="{StaticResource LightBackgroundColor}">
+            <ScrollView>
+                <StackLayout Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Center" Padding="20"
+                     BackgroundColor="White">
+                    <Label Text="Gib bitte deine Wallet Adresse und dein Passwort ein!" HorizontalTextAlignment="Center" />
+                    <Label Text="Wallet Adresse:" FontSize="Small" HorizontalTextAlignment="Center" />
+                    <Entry x:Name="inputWalletAddress" HorizontalTextAlignment="Center" />
+                    <Label Text="Passwort:" FontSize="Small" HorizontalTextAlignment="Center" />
+                    <Entry x:Name="inputPassPhrase" IsPassword="True" HorizontalTextAlignment="Center" />
+                    <Button Text="Speichern &amp; Fortfahren" Clicked="btnConfirm_ClickedAsync"
+                        BackgroundColor="{StaticResource Primary}" TextColor="{StaticResource PrimaryText}" />
+                </StackLayout>
+            </ScrollView>
+        </Frame>
+    </pages:PopupPage.Content>
+</pages:PopupPage>

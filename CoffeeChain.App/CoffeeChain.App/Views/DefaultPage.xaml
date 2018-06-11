@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CoffeeChain.App.Views.DefaultPage"
+             Title="404 - Default Page">
+    <ContentPage.Content>
+        <StackLayout Padding="10" BackgroundColor="{StaticResource LightBackgroundColor}">
+            <Label Text="This is a default page. If you see this, it means you forgot to swap it by an actual implementation." />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,14 +1,26 @@
-﻿using Nethereum.ABI.FunctionEncoding.Attributes;
+﻿using System.ComponentModel;
+using Nethereum.ABI.FunctionEncoding.Attributes;
 
 namespace CoffeeChain.Connector.FunctionOutputs
 {
     public enum MachineType
     {
+        [Description("Kapsel-Kaffeemaschine")]
         Capsule = 0,
+
+        [Description("Pad-Kaffeemaschine")]
         Pad = 1,
+
+        [Description("Filter-Kaffeemaschine")]
         Filter = 2,
+
+        [Description("Pulver-Kaffeemaschine")]
         Pulver = 3,
+
+        [Description("Vollautomat")]
         FullyAutomatic = 4,
+
+        [Description("Kaffeeautomat")]
         VendingMachine = 5,
     }
 
