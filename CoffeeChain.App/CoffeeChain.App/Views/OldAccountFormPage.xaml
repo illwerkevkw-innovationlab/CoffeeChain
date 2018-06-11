@@ -6,16 +6,18 @@
     x:Class="CoffeeChain.App.Views.OldAccountFormPage">
     <pages:PopupPage.Content>
         <Frame BorderColor="DarkGray" Margin="30">
-            <StackLayout Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Center" Padding="20"
+            <ScrollView>
+                <StackLayout Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Center" Padding="20"
                      BackgroundColor="White">
-                <Label Text="Gib bitte deine Wallet Adresse und dein Passwort ein!" HorizontalTextAlignment="Center" />
-                <Label Text="Wallet Adresse:" FontSize="Small" HorizontalTextAlignment="Center" />
-                <Entry x:Name="inputWalletAddress" HorizontalTextAlignment="Center" />
-                <Label Text="Passwort:" FontSize="Small" HorizontalTextAlignment="Center" />
-                <Entry x:Name="inputPassPhrase" IsPassword="True" HorizontalTextAlignment="Center" />
-                <Button Text="Speichern &amp; Fortfahren" Clicked="btnConfirm_ClickedAsync"
+                    <Label Text="Gib bitte deine Wallet Adresse und dein Passwort ein!" HorizontalTextAlignment="Center" />
+                    <Label Text="Wallet Adresse:" FontSize="Small" HorizontalTextAlignment="Center" />
+                    <Entry x:Name="inputWalletAddress" HorizontalTextAlignment="Center" />
+                    <Label Text="Passwort:" FontSize="Small" HorizontalTextAlignment="Center" />
+                    <Entry x:Name="inputPassPhrase" IsPassword="True" HorizontalTextAlignment="Center" />
+                    <Button Text="Speichern &amp; Fortfahren" Clicked="btnConfirm_ClickedAsync"
                         BackgroundColor="{StaticResource Primary}" TextColor="{StaticResource PrimaryText}" />
-            </StackLayout>
+                </StackLayout>
+            </ScrollView>
         </Frame>
     </pages:PopupPage.Content>
 </pages:PopupPage>

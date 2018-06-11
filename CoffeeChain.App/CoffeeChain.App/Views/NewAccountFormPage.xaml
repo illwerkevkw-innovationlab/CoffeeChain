@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    x:Class="CoffeeChain.App.Views.NewAccountFormPage">
+    <pages:PopupPage.Content>
+        <Frame BorderColor="DarkGray" Margin="30">
+            <ScrollView>
+                <StackLayout Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Center" Padding="20"
+                     BackgroundColor="White">
+                    <Label Text="Bitte gib deine Daten ein und wähle ein sicheres Passwort!" HorizontalTextAlignment="Center" />
+                    <Label Text="Name:" FontSize="Small" HorizontalTextAlignment="Center" />
+                    <Entry x:Name="inputName" HorizontalTextAlignment="Center" />
+                    <Label Text="Abteilung:" FontSize="Small" HorizontalTextAlignment="Center" />
+                    <Entry x:Name="inputDepartment" HorizontalTextAlignment="Center" />
+                    <Label Text="Telefon:" FontSize="Small" HorizontalTextAlignment="Center" />
+                    <Entry x:Name="inputTelephone" HorizontalTextAlignment="Center" />
+                    <Label Text="Email:" FontSize="Small" HorizontalTextAlignment="Center" />
+                    <Entry x:Name="inputEmail" HorizontalTextAlignment="Center" />
+                    <Label Text="Passwort:" FontSize="Small" HorizontalTextAlignment="Center" />
+                    <Entry x:Name="inputPassPhrase" IsPassword="True" HorizontalTextAlignment="Center" />
+                    <Button Text="Account erstellen &amp; Fortfahren" Clicked="btnConfirm_ClickedAsync"
+                        BackgroundColor="{StaticResource Primary}" TextColor="{StaticResource PrimaryText}" />
+                </StackLayout>
+            </ScrollView>
+        </Frame>
+    </pages:PopupPage.Content>
+</pages:PopupPage>

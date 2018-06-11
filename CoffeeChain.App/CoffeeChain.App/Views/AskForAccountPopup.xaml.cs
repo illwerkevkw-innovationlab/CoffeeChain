@@ -32,8 +32,8 @@ namespace CoffeeChain.App.Views
 
         private async void btnNewAccount_ClickedAsync(object sender, System.EventArgs e)
         {
-            // TODO: implement creation of new account
-            await Navigation.PopAllPopupAsync();
+            await DisplayAlert("Nicht verfügbar", "Diese Funktion ist in der aktuellen Version noch nicht verfügbar.", "Alles klar!");
+            //await Navigation.PushPopupAsync(new NewAccountFormPage());
         }
     }
 }

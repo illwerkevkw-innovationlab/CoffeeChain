@@ -5,6 +5,7 @@ using CoffeeChain.Connector.FunctionOutputs;
 using Nethereum.Contracts;
 using Nethereum.Hex.HexTypes;
 using Nethereum.RPC.Accounts;
+using Nethereum.RPC.Eth.DTOs;
 using Nethereum.Web3;
 
 namespace CoffeeChain.Connector
@@ -123,7 +124,7 @@ namespace CoffeeChain.Connector
         public async Task<IList<EventLog<CoffeeBoughtEvent>>> GetCoffeeBoughtEventsForWallet(string wallet)
         {
             var eventLog = _contract.GetEvent("CoffeeBought");
-            var filterInput = await eventLog.CreateFilterAsync(new[] { wallet });
+            var filterInput = await eventLog.CreateFilterAsync(new object[] { wallet }, BlockParameter.CreateEarliest(), BlockParameter.CreateLatest());
             return await eventLog.GetFilterChanges<CoffeeBoughtEvent>(filterInput);
         }
 

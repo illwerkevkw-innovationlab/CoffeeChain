@@ -19,9 +19,14 @@ namespace CoffeeChain.App.Views
             BindingContext = _viewModel;
         }
 
-        protected override async void OnAppearing()
+        protected override void OnAppearing()
         {
-            await _viewModel.OnAppearing();
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+                await DisplayAlert("Nicht verfügbar", "Diese Funktion ist in der aktuellen Version noch nicht verfügbar.", "Alles klar!");
+            });
+
+            //await _viewModel.OnAppearing();
         }
     }
 }

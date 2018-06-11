@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using CoffeeChain.App.Models;
 using CoffeeChain.Connector.FunctionOutputs;
 using Nethereum.Contracts;
 
@@ -22,7 +24,9 @@ namespace CoffeeChain.App.ViewModels
 
         public async Task OnAppearing()
         {
-            Transactions = await _coffeeEconomyService.GetCoffeeBoughtEventsForWallet(_web3.TransactionManager.Account.Address);
+            Transactions = await _coffeeEconomyService.GetCoffeeBoughtEventsForWallet(Settings.Current.PublicWalletAddress);
+
+            Console.WriteLine($"Found {Transactions.Count} old transactions to display for wallet {Settings.Current.PublicWalletAddress}.");
 
             IsBusy = false;
         }

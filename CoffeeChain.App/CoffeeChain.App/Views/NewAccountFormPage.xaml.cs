@@ -7,9 +7,9 @@ using Rg.Plugins.Popup.Extensions;
 
 namespace CoffeeChain.App.Views
 {
-    public partial class OldAccountFormPage : Rg.Plugins.Popup.Pages.PopupPage
+    public partial class NewAccountFormPage : Rg.Plugins.Popup.Pages.PopupPage
     {
-        public OldAccountFormPage()
+        public NewAccountFormPage()
         {
             InitializeComponent();
         }
@@ -32,39 +32,47 @@ namespace CoffeeChain.App.Views
 
         private async void btnConfirm_ClickedAsync(object sender, EventArgs eventArgs)
         {
-            var wallet = inputWalletAddress.Text;
+            var name = inputName.Text;
+            var department = inputDepartment.Text ?? string.Empty;
+            var telephone = inputTelephone.Text ?? string.Empty;
+            var email = inputEmail.Text ?? string.Empty;
             var passphrase = inputPassPhrase.Text;
 
-            Console.WriteLine($"Wallet: {wallet}, Passphrase: {passphrase}");
+            Console.WriteLine($"Name: {name}, Department: {department}, Telephone: {telephone}, Email: {email}, Passphrase: {passphrase}");
 
-            if (wallet.IsNullOrEmpty() || !wallet.IsValidEthereumAddress() || passphrase.IsNullOrEmpty())
+            if (name.IsNullOrEmpty() || passphrase.IsNullOrEmpty())
             {
                 Console.WriteLine($"Invalid input. Aborting.");
                 return;
             }
 
             var web3 = new Web3(Settings.Current.ServerIpAddress);
+
+            string wallet;
+            try
+            {
+                // creating the new account
+                wallet = await web3.Personal.NewAccount.SendRequestAsync(passphrase);
+                Console.WriteLine($"The new wallet has the address {wallet}.");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"An unexpected error occured when creating a new account.");
+                Console.WriteLine(e);
+                return;
+            }
+
             var coffeeEconomyService = new CoffeeEconomyService(new ManagedAccount(wallet, passphrase), web3, Settings.Current.ContractAddress);
 
             try
             {
-                // check if wallet is a customer
-                //if (!(await coffeeEconomyService.IsCustomerAsync(wallet)))
-                //{
-                //    System.Console.WriteLine($"Given wallet ({wallet}) is no customer.");
-                //    return; // it is no registered customer on our coffee chain
-                //}
-
-                // check credentials via web3
-                if (!(await web3.Personal.UnlockAccount.SendRequestAsync(wallet, passphrase, 0)))
-                {
-                    Console.WriteLine($"Unlocking account with given credentials failed.");
-                    return; // these credentials seem invalid
-                }
+                // create customer for wallet
+                var transactionId = await coffeeEconomyService.AddCustomerAsync(wallet, name, department, telephone, email);
+                Console.WriteLine($"Created customer with transactionId {transactionId}.");
             }
             catch (Exception e)
             {
-                Console.WriteLine($"An unexpected error occured.");
+                Console.WriteLine($"An unexpected error occured when creating the customer.");
                 Console.WriteLine(e);
                 return; // also if we have an error, this cannot be valid or useful, so we abort
             }

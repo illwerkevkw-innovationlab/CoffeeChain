@@ -4,6 +4,10 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="Rg.Plugins.Popup" Version="1.1.4.158-pre" />
@@ -28,6 +32,9 @@
     </Compile>
     <Compile Update="Views\DefaultPage.xaml.cs">
       <DependentUpon>DefaultPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\NewAccountFormPage.xaml.cs">
+      <DependentUpon>NewAccountFormPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>

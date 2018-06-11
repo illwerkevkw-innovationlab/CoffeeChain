@@ -110,7 +110,7 @@ namespace CoffeeChain.App.ViewModels
                     _coffeeMakerStorageService.AddOrUpdateCoffeeMakerDetails(extendedCoffeeMakerDetails);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // reset our view data
                 ResetLoadedVariables();
