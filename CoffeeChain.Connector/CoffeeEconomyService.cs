@@ -128,75 +128,91 @@ namespace CoffeeChain.Connector
             return await eventLog.GetFilterChanges<CoffeeBoughtEvent>(filterInput);
         }
 
-        private const string ABI = @"[
-  {
+        private const string ABI = @"[{
+    ""constant"": false,
+    ""inputs"": [],
+    ""name"": ""CoffeeEconomy"",
+    ""outputs"": [],
+    ""payable"": false,
+    ""stateMutability"": ""nonpayable"",
+    ""type"": ""function""
+},
+{
     ""constant"": true,
-    ""inputs"": [
-      {
+    ""inputs"": [{
         ""name"": ""wallet"",
         ""type"": ""address""
-      }
-    ],
+    }],
     ""name"": ""getCustomerData"",
-    ""outputs"": [
-      {
+    ""outputs"": [{
         ""name"": ""name"",
         ""type"": ""string""
-      },
-      {
+    },
+    {
         ""name"": ""department"",
         ""type"": ""string""
-      },
-      {
+    },
+    {
         ""name"": ""telephone"",
         ""type"": ""string""
-      },
-      {
+    },
+    {
         ""name"": ""email"",
         ""type"": ""string""
-      }
-    ],
+    }],
     ""payable"": false,
     ""stateMutability"": ""view"",
     ""type"": ""function""
-  },
-  {
+},
+{
     ""constant"": false,
-    ""inputs"": [
-      {
+    ""inputs"": [{
         ""name"": ""wallet"",
         ""type"": ""address""
-      }
-    ],
+    }],
     ""name"": ""addAuthorizedExchangeWallet"",
     ""outputs"": [],
     ""payable"": false,
     ""stateMutability"": ""nonpayable"",
     ""type"": ""function""
-  },
-  {
+},
+{
+    ""constant"": true,
+    ""inputs"": [{
+        ""name"": ""wallet"",
+        ""type"": ""address""
+    }],
+    ""name"": ""isCustomer"",
+    ""outputs"": [{
+        ""name"": ""trueOrFalse"",
+        ""type"": ""bool"",
+        ""value"": false
+    }],
+    ""payable"": false,
+    ""stateMutability"": ""view"",
+    ""type"": ""function""
+},
+{
     ""constant"": false,
-    ""inputs"": [
-      {
+    ""inputs"": [{
         ""name"": ""coffeeMaker"",
         ""type"": ""address""
-      },
-      {
+    },
+    {
         ""name"": ""name"",
         ""type"": ""string""
-      },
-      {
+    },
+    {
         ""name"": ""price"",
         ""type"": ""uint256""
-      }
-    ],
+    }],
     ""name"": ""addCoffeeMakerProgram"",
     ""outputs"": [],
     ""payable"": false,
     ""stateMutability"": ""nonpayable"",
     ""type"": ""function""
-  },
-  {
+},
+{
     ""constant"": false,
     ""inputs"": [],
     ""name"": ""kill"",
@@ -204,434 +220,434 @@ namespace CoffeeChain.Connector
     ""payable"": false,
     ""stateMutability"": ""nonpayable"",
     ""type"": ""function""
-  },
-  {
+},
+{
     ""constant"": false,
-    ""inputs"": [
-      {
+    ""inputs"": [{
         ""name"": ""wallet"",
         ""type"": ""address""
-      },
-      {
+    },
+    {
         ""name"": ""name"",
         ""type"": ""string""
-      },
-      {
+    },
+    {
         ""name"": ""department"",
         ""type"": ""string""
-      },
-      {
+    },
+    {
         ""name"": ""telephone"",
         ""type"": ""string""
-      },
-      {
+    },
+    {
         ""name"": ""email"",
         ""type"": ""string""
-      }
-    ],
+    }],
     ""name"": ""addCustomer"",
     ""outputs"": [],
     ""payable"": false,
     ""stateMutability"": ""nonpayable"",
     ""type"": ""function""
-  },
-  {
+},
+{
     ""constant"": true,
-    ""inputs"": [
-      {
+    ""inputs"": [{
         ""name"": ""wallet"",
         ""type"": ""address""
-      }
-    ],
+    }],
     ""name"": ""getTokens"",
-    ""outputs"": [
-      {
-        ""name"": ""tokenss"",
+    ""outputs"": [{
+        ""name"": ""tokens"",
         ""type"": ""uint256"",
         ""value"": ""0""
-      }
-    ],
+    }],
     ""payable"": false,
     ""stateMutability"": ""view"",
     ""type"": ""function""
-  },
-  {
+},
+{
     ""constant"": false,
-    ""inputs"": [
-      {
+    ""inputs"": [{
         ""name"": ""wallet"",
         ""type"": ""address""
-      },
-      {
+    },
+    {
         ""name"": ""name"",
         ""type"": ""string""
-      },
-      {
+    },
+    {
         ""name"": ""locDescriptive"",
         ""type"": ""string""
-      },
-      {
+    },
+    {
         ""name"": ""locDepartment"",
         ""type"": ""string""
-      },
-      {
+    },
+    {
         ""name"": ""locLatitude"",
         ""type"": ""string""
-      },
-      {
+    },
+    {
         ""name"": ""locLongitude"",
         ""type"": ""string""
-      },
-      {
+    },
+    {
         ""name"": ""infoMachineType"",
         ""type"": ""uint8""
-      },
-      {
+    },
+    {
         ""name"": ""infoDescription"",
         ""type"": ""string""
-      }
-    ],
+    }],
     ""name"": ""addCoffeemaker"",
     ""outputs"": [],
     ""payable"": false,
     ""stateMutability"": ""nonpayable"",
     ""type"": ""function""
-  },
-  {
+},
+{
     ""constant"": false,
-    ""inputs"": [
-      {
+    ""inputs"": [{
         ""name"": ""coffeeMaker"",
         ""type"": ""address""
-      },
-      {
+    },
+    {
         ""name"": ""program"",
         ""type"": ""uint8""
-      },
-      {
+    },
+    {
         ""name"": ""amount"",
         ""type"": ""uint8""
-      }
-    ],
+    }],
     ""name"": ""buyCoffee"",
-    ""outputs"": [
-      {
+    ""outputs"": [{
         ""name"": ""transferedTokens"",
         ""type"": ""uint256""
-      }
-    ],
+    }],
     ""payable"": false,
     ""stateMutability"": ""nonpayable"",
     ""type"": ""function""
-  },
-  {
+},
+{
     ""constant"": true,
-    ""inputs"": [
-      {
+    ""inputs"": [{
         ""name"": ""wallet"",
         ""type"": ""address""
-      },
-      {
+    },
+    {
         ""name"": ""program"",
         ""type"": ""uint8""
-      }
-    ],
+    }],
     ""name"": ""getCoffeeMakerProgramDetails"",
-    ""outputs"": [
-      {
+    ""outputs"": [{
         ""name"": ""name"",
         ""type"": ""string"",
         ""value"": """"
-      },
-      {
+    },
+    {
         ""name"": ""price"",
         ""type"": ""uint256"",
         ""value"": ""0""
-      }
-    ],
+    }],
     ""payable"": false,
     ""stateMutability"": ""view"",
     ""type"": ""function""
-  },
-  {
+},
+{
     ""constant"": true,
-    ""inputs"": [
-      {
+    ""inputs"": [{
         ""name"": ""wallet"",
         ""type"": ""address""
-      }
-    ],
+    }],
     ""name"": ""getCoffeeMakerProgramCount"",
-    ""outputs"": [
-      {
+    ""outputs"": [{
         ""name"": ""programCount"",
         ""type"": ""uint8"",
         ""value"": ""0""
-      }
-    ],
+    }],
     ""payable"": false,
     ""stateMutability"": ""view"",
     ""type"": ""function""
-  },
-  {
+},
+{
     ""constant"": true,
-    ""inputs"": [
-      {
+    ""inputs"": [{
         ""name"": ""wallet"",
         ""type"": ""address""
-      }
-    ],
-    ""name"": ""getCoffeeMakerData"",
-    ""outputs"": [
-      {
-        ""name"": ""owner"",
-        ""type"": ""address""
-      },
-      {
-        ""name"": ""name"",
-        ""type"": ""string""
-      },
-      {
-        ""name"": ""descriptiveLocation"",
-        ""type"": ""string""
-      },
-      {
-        ""name"": ""department"",
-        ""type"": ""string""
-      },
-      {
-        ""name"": ""latitude"",
-        ""type"": ""string""
-      },
-      {
-        ""name"": ""longitude"",
-        ""type"": ""string""
-      },
-      {
-        ""name"": ""machineType"",
-        ""type"": ""uint8""
-      },
-      {
-        ""name"": ""machineInfo"",
-        ""type"": ""string""
-      }
-    ],
+    }],
+    ""name"": ""isAuthorizedExchangeWallet"",
+    ""outputs"": [{
+        ""name"": ""trueOrFalse"",
+        ""type"": ""bool"",
+        ""value"": false
+    }],
     ""payable"": false,
     ""stateMutability"": ""view"",
     ""type"": ""function""
-  },
-  {
+},
+{
+    ""constant"": true,
+    ""inputs"": [{
+        ""name"": ""wallet"",
+        ""type"": ""address""
+    }],
+    ""name"": ""getCoffeeMakerData"",
+    ""outputs"": [{
+        ""name"": ""owner"",
+        ""type"": ""address""
+    },
+    {
+        ""name"": ""name"",
+        ""type"": ""string""
+    },
+    {
+        ""name"": ""descriptiveLocation"",
+        ""type"": ""string""
+    },
+    {
+        ""name"": ""department"",
+        ""type"": ""string""
+    },
+    {
+        ""name"": ""latitude"",
+        ""type"": ""string""
+    },
+    {
+        ""name"": ""longitude"",
+        ""type"": ""string""
+    },
+    {
+        ""name"": ""machineType"",
+        ""type"": ""uint8""
+    },
+    {
+        ""name"": ""description"",
+        ""type"": ""string""
+    }],
+    ""payable"": false,
+    ""stateMutability"": ""view"",
+    ""type"": ""function""
+},
+{
     ""constant"": false,
-    ""inputs"": [
-      {
+    ""inputs"": [{
         ""name"": ""receiver"",
         ""type"": ""address""
-      },
-      {
+    },
+    {
         ""name"": ""tokens"",
         ""type"": ""uint256""
-      }
-    ],
+    }],
     ""name"": ""transferTokens"",
-    ""outputs"": [
-      {
+    ""outputs"": [{
         ""name"": ""transferedTokens"",
         ""type"": ""uint256""
-      }
-    ],
+    }],
     ""payable"": false,
     ""stateMutability"": ""nonpayable"",
     ""type"": ""function""
-  },
-  {
+},
+{
     ""constant"": false,
-    ""inputs"": [
-      {
+    ""inputs"": [{
         ""name"": ""seller"",
         ""type"": ""address""
-      },
-      {
+    },
+    {
         ""name"": ""tokens"",
         ""type"": ""uint256""
-      }
-    ],
+    }],
     ""name"": ""sellTokens"",
-    ""outputs"": [
-      {
+    ""outputs"": [{
         ""name"": ""soldTokens"",
         ""type"": ""uint256""
-      }
-    ],
+    }],
     ""payable"": false,
     ""stateMutability"": ""nonpayable"",
     ""type"": ""function""
-  },
-  {
+},
+{
+    ""constant"": true,
+    ""inputs"": [{
+        ""name"": ""wallet"",
+        ""type"": ""address""
+    }],
+    ""name"": ""isCoffeeMaker"",
+    ""outputs"": [{
+        ""name"": ""trueOrFalse"",
+        ""type"": ""bool"",
+        ""value"": false
+    }],
+    ""payable"": false,
+    ""stateMutability"": ""view"",
+    ""type"": ""function""
+},
+{
     ""constant"": false,
-    ""inputs"": [
-      {
+    ""inputs"": [{
         ""name"": ""buyer"",
         ""type"": ""address""
-      }
-    ],
+    }],
     ""name"": ""buyTokens"",
-    ""outputs"": [
-      {
+    ""outputs"": [{
         ""name"": ""receivedTokens"",
         ""type"": ""uint256""
-      }
-    ],
+    }],
     ""payable"": true,
     ""stateMutability"": ""payable"",
     ""type"": ""function""
-  },
-  {
-    ""inputs"": [],
+},
+{
+    ""constant"": false,
+    ""inputs"": [{
+        ""name"": ""newOwner"",
+        ""type"": ""address""
+    }],
+    ""name"": ""transferOwnership"",
+    ""outputs"": [],
     ""payable"": false,
     ""stateMutability"": ""nonpayable"",
-    ""type"": ""constructor""
-  },
-  {
+    ""type"": ""function""
+},
+{
     ""anonymous"": false,
-    ""inputs"": [
-      {
-        ""indexed"": false,
+    ""inputs"": [{
+        ""indexed"": true,
         ""name"": ""wallet"",
         ""type"": ""address""
-      }
-    ],
+    }],
     ""name"": ""ExchangeWalletAuthorized"",
     ""type"": ""event""
-  },
-  {
+},
+{
     ""anonymous"": false,
-    ""inputs"": [
-      {
-        ""indexed"": false,
+    ""inputs"": [{
+        ""indexed"": true,
         ""name"": ""wallet"",
         ""type"": ""address""
-      }
-    ],
+    }],
     ""name"": ""CustomerAdded"",
     ""type"": ""event""
-  },
-  {
+},
+{
     ""anonymous"": false,
-    ""inputs"": [
-      {
-        ""indexed"": false,
+    ""inputs"": [{
+        ""indexed"": true,
         ""name"": ""wallet"",
         ""type"": ""address""
-      },
-      {
-        ""indexed"": false,
+    },
+    {
+        ""indexed"": true,
         ""name"": ""owner"",
         ""type"": ""address""
-      }
-    ],
+    }],
     ""name"": ""CoffeeMakerAdded"",
     ""type"": ""event""
-  },
-  {
+},
+{
     ""anonymous"": false,
-    ""inputs"": [
-      {
-        ""indexed"": false,
+    ""inputs"": [{
+        ""indexed"": true,
         ""name"": ""coffeeMaker"",
         ""type"": ""address""
-      },
-      {
-        ""indexed"": false,
+    },
+    {
+        ""indexed"": true,
         ""name"": ""name"",
         ""type"": ""string""
-      },
-      {
-        ""indexed"": false,
+    },
+    {
+        ""indexed"": true,
         ""name"": ""price"",
         ""type"": ""uint256""
-      }
-    ],
+    }],
     ""name"": ""CoffeeMakerProgramAdded"",
     ""type"": ""event""
-  },
-  {
+},
+{
     ""anonymous"": false,
-    ""inputs"": [
-      {
-        ""indexed"": false,
+    ""inputs"": [{
+        ""indexed"": true,
         ""name"": ""coffeeMaker"",
         ""type"": ""address""
-      },
-      {
-        ""indexed"": false,
+    },
+    {
+        ""indexed"": true,
         ""name"": ""program"",
         ""type"": ""uint8""
-      },
-      {
-        ""indexed"": false,
+    },
+    {
+        ""indexed"": true,
         ""name"": ""amount"",
         ""type"": ""uint8""
-      }
-    ],
+    }],
     ""name"": ""CoffeeBought"",
     ""type"": ""event""
-  },
-  {
+},
+{
     ""anonymous"": false,
-    ""inputs"": [
-      {
-        ""indexed"": false,
+    ""inputs"": [{
+        ""indexed"": true,
         ""name"": ""customer"",
         ""type"": ""address""
-      },
-      {
-        ""indexed"": false,
+    },
+    {
+        ""indexed"": true,
         ""name"": ""tokens"",
         ""type"": ""uint256""
-      }
-    ],
+    }],
     ""name"": ""TokensBought"",
     ""type"": ""event""
-  },
-  {
+},
+{
     ""anonymous"": false,
-    ""inputs"": [
-      {
-        ""indexed"": false,
+    ""inputs"": [{
+        ""indexed"": true,
         ""name"": ""customer"",
         ""type"": ""address""
-      },
-      {
-        ""indexed"": false,
+    },
+    {
+        ""indexed"": true,
         ""name"": ""tokens"",
         ""type"": ""uint256""
-      }
-    ],
+    }],
     ""name"": ""TokensSold"",
     ""type"": ""event""
-  },
-  {
+},
+{
     ""anonymous"": false,
-    ""inputs"": [
-      {
-        ""indexed"": false,
+    ""inputs"": [{
+        ""indexed"": true,
         ""name"": ""sender"",
         ""type"": ""address""
-      },
-      {
-        ""indexed"": false,
+    },
+    {
+        ""indexed"": true,
         ""name"": ""recipient"",
         ""type"": ""address""
-      },
-      {
-        ""indexed"": false,
+    },
+    {
+        ""indexed"": true,
         ""name"": ""tokens"",
         ""type"": ""uint256""
-      }
-    ],
+    }],
     ""name"": ""TokensTransfered"",
     ""type"": ""event""
-  }
-]";
+},
+{
+    ""anonymous"": false,
+    ""inputs"": [{
+        ""indexed"": true,
+        ""name"": ""oldOwner"",
+        ""type"": ""address""
+    },
+    {
+        ""indexed"": true,
+        ""name"": ""newOwner"",
+        ""type"": ""address""
+    }],
+    ""name"": ""ContractOwnershipChanged"",
+    ""type"": ""event""
+}]";
     }
 }
