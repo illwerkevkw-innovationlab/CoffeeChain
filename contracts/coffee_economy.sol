@@ -289,7 +289,7 @@ contract CoffeeMakerEconomy is Mortal {
         require(tokenStore[msg.sender] >= totalPrice);
 		
         tokenStore[msg.sender] -= totalPrice;
-        tokenStore[msg.sender] += totalPrice;
+        tokenStore[coffeeMaker] += totalPrice;
 		
         emit CoffeeBought(coffeeMaker, program, amount);
 		
