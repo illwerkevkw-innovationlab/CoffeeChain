@@ -21,6 +21,11 @@ namespace CoffeeChain.App.Views
             BindingContext = _viewModel;
         }
 
+        public BuyCoffeePage(string wallet) : this()
+        {
+            _viewModel.CoffeeMaker = wallet;
+        }
+
         private async void btnScan_ClickedAsync(object sender, EventArgs e)
         {
             var scan = new ZXingScannerPage();

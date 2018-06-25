@@ -4,7 +4,8 @@
              x:Class="CoffeeChain.App.Views.CoffeeMakersPage">
     <ContentPage.Content>
         <ScrollView BackgroundColor="{StaticResource LightBackgroundColor}">
-            <ListView ItemsSource="{Binding KnownCoffeeMakers}" HasUnevenRows="True" VerticalOptions="FillAndExpand" SelectionMode="None">
+            <ListView ItemsSource="{Binding KnownCoffeeMakers}" HasUnevenRows="True" VerticalOptions="FillAndExpand" 
+                      SelectionMode="Single" ItemSelected="CoffeeMakerListView_ItemSelected">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
