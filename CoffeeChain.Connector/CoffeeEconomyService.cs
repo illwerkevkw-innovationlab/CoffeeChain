@@ -12,8 +12,8 @@ namespace CoffeeChain.Connector
 {
     public class CoffeeEconomyService : ICoffeeEconomyService
     {
-        private static HexBigInteger DefaultGasToUse = new HexBigInteger(140000);
-        private static HexBigInteger DefaultGasValue = new HexBigInteger(144000000000000000);
+        private static HexBigInteger DefaultGasToUse = new HexBigInteger(2000000);
+        private static HexBigInteger DefaultGasPrice = new HexBigInteger(Nethereum.Util.UnitConversion.Convert.ToWei(20, Nethereum.Util.UnitConversion.EthUnit.Gwei));
 
         private readonly IAccount _account;
         private readonly Web3 _web3;
@@ -32,13 +32,13 @@ namespace CoffeeChain.Connector
         public async Task<string> AddAuthorizedExchangeWalletAsync(string address)
         {
             var addAuthorizedExchangeWallet = _contract.GetFunction("addAuthorizedExchangeWallet");
-            return await addAuthorizedExchangeWallet.SendTransactionAsync(_account.Address, DefaultGasToUse, DefaultGasValue, null, address);
+            return await addAuthorizedExchangeWallet.SendTransactionAsync(_account.Address, DefaultGasToUse, DefaultGasPrice, null, address);
         }
 
         public async Task<string> AddCustomerAsync(string address, string name, string department, string telephone, string email)
         {
             var addCustomer = _contract.GetFunction("addCustomer");
-            return await addCustomer.SendTransactionAsync(_account.Address, DefaultGasToUse, DefaultGasValue, null, address,
+            return await addCustomer.SendTransactionAsync(_account.Address, DefaultGasToUse, DefaultGasPrice, null, address,
                 name, department, telephone, email);
         }
 
@@ -46,39 +46,39 @@ namespace CoffeeChain.Connector
             string locLatitude, string locLongitude, int infoMachineType, string infoDescription)
         {
             var addCoffeemaker = _contract.GetFunction("addCoffeemaker");
-            return await addCoffeemaker.SendTransactionAsync(_account.Address, DefaultGasToUse, DefaultGasValue, null, target,
+            return await addCoffeemaker.SendTransactionAsync(_account.Address, DefaultGasToUse, DefaultGasPrice, null, target,
                 name, locDescriptive, locDepartment, locLatitude, locLongitude, infoMachineType, infoDescription);
         }
 
         public async Task<string> AddCoffeemakerPogramAsync(string target, string name, int price)
         {
             var addcoffeemakerprogramm = _contract.GetFunction("addCoffeeMakerProgram");
-            return await addcoffeemakerprogramm.SendTransactionAsync(_account.Address, DefaultGasToUse, DefaultGasValue,
+            return await addcoffeemakerprogramm.SendTransactionAsync(_account.Address, DefaultGasToUse, DefaultGasPrice,
                 null, target, name, price);
         }
 
         public async Task<string> BuyTokensAsync(string forAddress, BigInteger amount)
         {
             var buyTokens = _contract.GetFunction("buyTokens");
-            return await buyTokens.SendTransactionAsync(_account.Address, DefaultGasToUse, DefaultGasValue, new HexBigInteger(amount), forAddress);
+            return await buyTokens.SendTransactionAsync(_account.Address, DefaultGasToUse, DefaultGasPrice, new HexBigInteger(amount), forAddress);
         }
 
         public async Task<string> SellTokensAsync(string seller, int tokens)
         {
             var selltokens = _contract.GetFunction("sellTokens");
-            return await selltokens.SendTransactionAsync(_account.Address, DefaultGasToUse, DefaultGasValue, null, seller, tokens);
+            return await selltokens.SendTransactionAsync(_account.Address, DefaultGasToUse, DefaultGasPrice, null, seller, tokens);
         }
 
         public async Task<string> TransfareTokensAsync(string receiver, int tokens)
         {
             var transtokens = _contract.GetFunction("transferTokens");
-            return await transtokens.SendTransactionAsync(_account.Address, DefaultGasToUse, DefaultGasValue, null, receiver, tokens);
+            return await transtokens.SendTransactionAsync(_account.Address, DefaultGasToUse, DefaultGasPrice, null, receiver, tokens);
         }
 
         public async Task<string> BuyCoffeeAsync(string coffeeMaker, int program, int amount)
         {
             var BuyCoffee = _contract.GetFunction("buyCoffee");
-            return await BuyCoffee.SendTransactionAsync(_account.Address, DefaultGasToUse, DefaultGasValue, null, coffeeMaker, program, amount);
+            return await BuyCoffee.SendTransactionAsync(_account.Address, DefaultGasToUse, DefaultGasPrice, null, coffeeMaker, program, amount);
         }
 
         public async Task<int> GetTokensAsync(string wallet)

@@ -17,19 +17,19 @@ namespace CoffeeChain.App.Models
 
         public string ServerIpAddress
         {
-            get => AppSettings.GetValueOrDefault(nameof(ServerIpAddress), "http://192.168.1.166:30304");
+            get => AppSettings.GetValueOrDefault(nameof(ServerIpAddress), "http://192.168.10.1:30304");
             set => AppSettings.AddOrUpdateValue(nameof(ServerIpAddress), value);
         }
 
         public int ChainId
         {
-            get => AppSettings.GetValueOrDefault(nameof(ChainId), 242);
+            get => AppSettings.GetValueOrDefault(nameof(ChainId), 42);
             set => AppSettings.AddOrUpdateValue(nameof(ChainId), value);
         }
 
         public string ContractAddress
         {
-            get => AppSettings.GetValueOrDefault(nameof(ContractAddress), "0x3F45D4615A21cB534E1b0173EDBCb0305E41da96");
+            get => AppSettings.GetValueOrDefault(nameof(ContractAddress), "0x6f7A0Eb8303CDD57597A59AD79D17aEd39f01fCb");
             set => AppSettings.AddOrUpdateValue(nameof(ContractAddress), value);
         }
 
