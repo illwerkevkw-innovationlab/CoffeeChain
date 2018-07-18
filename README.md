@@ -1,5 +1,9 @@
 # CoffeeChain - An Ethereum Smart Contract Example
 
+<p align="center">
+    <img title="Final CoffeeChain Prototype" src="images/full_setup_cinema.jpg" width="75%">
+</p>
+
 ## Table of Contents
 
 - [Install](#install)
